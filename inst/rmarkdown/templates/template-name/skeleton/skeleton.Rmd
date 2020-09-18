@@ -12,14 +12,10 @@ output:
 
 # Setup
 
+Load data and packages first.
+
 ```{r, warning = FALSE, message = FALSE, include = TRUE}
-filename <- "C:/Users/fasaljm/Desktop/Aaron/EPYC Dataset Renaming 2020/Datasets/5. C123W1_Complete.v3_01092020.sav"
-# setup.R contains the common command that load the packages and the main dataset as mydata
-# data is read from filename and saved as mydata
-source("Scripts/SETUP.R")
-# the script below extracts the columns belonging to that scale and saves it in a separate dataframe
-# any reverse coding and calculation of aggregate scores is done within the script
-source("Scripts/SWLS.R")
+
 ```
 
 # Scale Description
@@ -40,11 +36,15 @@ Graphical display of the correlations within the scale. A good scale should show
 
 # Cronbach Alphas
 
+Calculate Cronbach Alpha using `alpha()` from the `psych` package.
+
 ```{r}
 
 ```
 
 # CFA
+
+Conduct a CFA to assess the factor structure and *Unidimensionality* using `cfa()` from the `lavaan` package.
 
 ```{r}
 
