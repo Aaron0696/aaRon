@@ -14,17 +14,17 @@ prettylavaan <- function(fitobj, output_format = "asis")
 {
   # extract parameter estimates
   params <- lavaan::parameterEstimates(fitobj, standardized = TRUE)
-    # formatting
+  # formatting
   # change column names to sentence case
   names(params) <- toupper(names(params))
   # keep only certain columns
   params <- params[,grep("LHS|OP|RHS|EST|SE|^Z$|PVALUE|CI|STD.ALL",names(params))]
 
   # extract fit indices
-  fitind <- data.frame(Values = round(fitMeasures(fitobj,
-                                                  fit.measures = c("chisq","df","pvalue","cfi",
-                                                                   "tli","rmsea","srmr","aic","bic")),2))
-    # formatting
+  fitind <- data.frame(Values = round(lavaan::fitMeasures(fitobj,
+                                                          fit.measures = c("chisq","df","pvalue","cfi",
+                                                                           "tli","rmsea","srmr","aic","bic")),2))
+  # formatting
   row.names(fitind) <- toupper(row.names(fitind))
   if(output_format == "asis")
   {
