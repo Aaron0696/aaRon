@@ -1,11 +1,10 @@
 Package: aaRon
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Personal Package of Home-Brewed Functions
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Aaron Lim Jin Ming
+Maintainer: Aaron Lim Jin Ming <aronlimjm@gmail.com>
+Description: I found myself using certain self-made functions and template frequently across work, so I decided to compile these functions and templates into a github package for easy access and sharing. 
+License: Not sure...
 Encoding: UTF-8
 LazyData: true

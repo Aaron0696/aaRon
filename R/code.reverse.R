@@ -10,5 +10,6 @@ code.reverse <- function(vector, original_levels){
   # return
   return(vector)
 }
+# demonstration
 # vector <- c("SA","A","D","SD")
 # code.reverse(vector, original_levels = c("SD","D","A","SA"))
