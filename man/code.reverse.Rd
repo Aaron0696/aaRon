@@ -1,15 +1,20 @@
 \name{code.reverse}
 \alias{code.reverse}
-\title{Reverse Coding of Scales Using factor()}
+\title{Reverse Coding of Scales}
 \usage{
-code.reverse(c("SA","A","D","SD"), original_levels = c("SD","D","A","SA"))
+code.reverse(vector, original_levels)
+}
+\arguments{
+  \item{vector}{A numeric, character or factor vector.}
+  \item{original_levels}{A character vector denoting the order of the original scale (lowest level on the left)}
+}
+\value{
+Returns a factor vector of the same length as \code{vector} with reverse-coded responses, with levels corresponding to \code{original_levels}
 }
 \description{
-Takes in a numeric, character or factor vector as its first argument. The second argument (original_levels) takes in a character vector denoting the order of the original scale (lowest level on the left).
-    The output is a vector where values from the first argument have been reverse-coded, responses indicating the lowest levels now indicate the highest levels. (E.g Strongly Agree -> Strongly Disagree)
-    One advantage over psych::reverse.code is that input need not be numeric.
+Implements reverse-coding of items using \code{factor()}. One advantage over \code{psych::reverse.code} is that input need not be numeric.
 }
 \examples{
-vector <- c("SA","A","D","SD")
-code.reverse(vector, original_levels = c("SD","D","A","SA"))
+mydata <- data.frame(myscale = c("Disagree", "Neutral", "Agree", "Neutral","Agree"))
+code.reverse(vector = mydata$myscale, original_levels = c("Disagree","Neutral","Agree"))
 }
