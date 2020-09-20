@@ -11,6 +11,8 @@
 #' @examples To be added...
 prettyalpha <- function(alphaobj)
 {
+  # for each of these dataframes within alphaobj, total, alpha.drop and item.stats
+  # use kable() to print out a nice table for each
   cat("\n\n")
   cat("**Cronbach Alpha**:")
   cat("\n\n")
