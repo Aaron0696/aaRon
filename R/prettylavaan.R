@@ -4,12 +4,17 @@
 #' This function is an alternative to \code{summary()} that can print out a pretty output within such a loop.
 #'
 #' @param fitobj A lavaan fit object.
-#' @param output_format Output format, currently only "asis" is implemented.
+#' @param output_format Output format, either "asis" for use with \code{results = "asis"} chunks. Or "datatable" for general html output.
 #'
 #' @return
 #' @export
 #'
-#' @examples TODO
+#' @examples ## The famous Holzinger and Swineford (1939) example
+#' HS.model <-  "visual  =~ x1 + x2 + x3
+#'               textual =~ x4 + x5 + x6
+#'               speed   =~ x7 + x8 + x9"
+#' fit <- cfa(HS.model, data = HolzingerSwineford1939)
+#' prettylavaan(fit, output_format = "datatable")
 prettylavaan <- function(fitobj, output_format = "asis")
 {
   # extract parameter estimates
@@ -17,8 +22,8 @@ prettylavaan <- function(fitobj, output_format = "asis")
   # formatting
   # change column names to sentence case
   names(params) <- toupper(names(params))
-  # keep only certain columns
-  params <- params[,grep("LHS|OP|RHS|EST|SE|^Z$|PVALUE|CI|STD.ALL",names(params))]
+  # rearrange columns
+  params <- params[,c("LHS","OP","RHS","STD.ALL","EST","SE","Z","PVALUE")]
 
   # extract fit indices
   fitind <- data.frame(Values = round(lavaan::fitMeasures(fitobj,
@@ -30,7 +35,17 @@ prettylavaan <- function(fitobj, output_format = "asis")
   {
     cat("Fit Indices:\n\n")
     print(knitr::kable(fitind))
-    cat("\n\nParamter Estimates:\n\n")
+    cat("\n\nParameter Estimates:\n\n")
     print(knitr::kable(params, digits = 2))
+  }
+
+  if(output_format == "datatable")
+  {
+    cat("\n\n")
+    DT::datatable(fitind, width = 400, height = 600)
+    cat("\n\n")
+    params[,-1:-3] <- data.frame(lapply(params[,-1:-3], function(e){round(e,3)}))
+    DT::datatable(params)
+    cat("\n\n")
   }
 }

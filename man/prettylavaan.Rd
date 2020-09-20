@@ -9,7 +9,7 @@ prettylavaan(fitobj, output_format = "asis")
 \arguments{
 \item{fitobj}{A lavaan fit object.}
 
-\item{output_format}{Output format, currently only "asis" is implemented.}
+\item{output_format}{Output format, either "asis" for use with \code{results = "asis"} chunks. Or "datatable" for general html output.}
 }
 \value{
 
@@ -19,5 +19,10 @@ Results from \code{lavaan} get messed up when \code{summary()} is called within 
 This function is an alternative to \code{summary()} that can print out a pretty output within such a loop.
 }
 \examples{
-TODO
+## The famous Holzinger and Swineford (1939) example
+HS.model <-  "visual  =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9"
+fit <- cfa(HS.model, data = HolzingerSwineford1939)
+prettylavaan(fit, output_format = "datatable")
 }
