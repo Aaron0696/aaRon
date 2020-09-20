@@ -19,7 +19,8 @@ Results from \code{lavaan} get messed up when \code{summary()} is called within 
 This function is an alternative to \code{summary()} that can print out a pretty output within such a loop.
 }
 \examples{
-## The famous Holzinger and Swineford (1939) example
+library(lavaan)
+# The famous Holzinger and Swineford (1939) example
 HS.model <-  "visual  =~ x1 + x2 + x3
               textual =~ x4 + x5 + x6
               speed   =~ x7 + x8 + x9"

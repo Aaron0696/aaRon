@@ -43,6 +43,7 @@ prettylavaan <- function(fitobj, output_format = "asis")
 
   if(output_format == "datatable")
   {
+    # create text output for fit indices
     text <- paste0("Fit Indices:\nCHISQ = ",
                    fitind$Values[1], ", df = ",
                    fitind$Values[2],", p-value = ",
@@ -53,9 +54,11 @@ prettylavaan <- function(fitobj, output_format = "asis")
                    fitind$Values[7], "\nAIC = ",
                    fitind$Values[8], "\nBIC = ",
                    fitind$Values[9])
+    # print
     cat(text)
+    # change numeric values to 3 DP
     params[,-1:-3] <- data.frame(lapply(params[,-1:-3], function(e){round(e,3)}))
+    # return the datatable
     return(DT::datatable(params))
-    cat("\n\n")
   }
 }
