@@ -9,7 +9,9 @@
 #' @return
 #' @export
 #'
-#' @examples ## The famous Holzinger and Swineford (1939) example
+#' @examples
+#' library(lavaan)
+#' # The famous Holzinger and Swineford (1939) example
 #' HS.model <-  "visual  =~ x1 + x2 + x3
 #'               textual =~ x4 + x5 + x6
 #'               speed   =~ x7 + x8 + x9"
@@ -41,11 +43,19 @@ prettylavaan <- function(fitobj, output_format = "asis")
 
   if(output_format == "datatable")
   {
-    cat("\n\n")
-    DT::datatable(fitind, width = 400, height = 600)
-    cat("\n\n")
+    text <- paste0("Fit Indices:\nCHISQ = ",
+                   fitind$Values[1], ", df = ",
+                   fitind$Values[2],", p-value = ",
+                   fitind$Values[3], "\nCFI = ",
+                   fitind$Values[4], "\nTLI = ",
+                   fitind$Values[5], "\nRMSEA = ",
+                   fitind$Values[6], "\nSRMR = ",
+                   fitind$Values[7], "\nAIC = ",
+                   fitind$Values[8], "\nBIC = ",
+                   fitind$Values[9])
+    cat(text)
     params[,-1:-3] <- data.frame(lapply(params[,-1:-3], function(e){round(e,3)}))
-    DT::datatable(params)
+    return(DT::datatable(params))
     cat("\n\n")
   }
 }
