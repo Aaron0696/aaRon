@@ -35,9 +35,9 @@ prettylavaan <- function(fitobj, output_format = "asis")
   row.names(fitind) <- toupper(row.names(fitind))
   if(output_format == "asis")
   {
-    cat("Fit Indices:\n\n")
+    cat("**Fit Indices**:\n\n")
     print(knitr::kable(fitind))
-    cat("\n\nParameter Estimates:\n\n")
+    cat("\n\n**Parameter Estimates**:\n\n")
     print(knitr::kable(params, digits = 2))
   }
 
