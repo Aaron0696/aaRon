@@ -4,12 +4,21 @@
 \alias{prettylavaan}
 \title{Pretty Printing of Lavaan Results}
 \usage{
-prettylavaan(fitobj, output_format = "asis")
+prettylavaan(
+  fitobj,
+  output_format = "asis",
+  robust = FALSE,
+  modindice.nrow = 10
+)
 }
 \arguments{
 \item{fitobj}{A lavaan fit object.}
 
 \item{output_format}{Output format, either "asis" for use with \code{results = "asis"} chunks. Or "datatable" for general html output.}
+
+\item{robust}{Defaults to \code{FALSE}, set to \code{TRUE} to print out scaled and robust fit indicators.}
+
+\item{modindice.nrow}{Defaults to 10. Number of rows to display for modification indices.}
 }
 \value{
 
@@ -20,10 +29,17 @@ This function is an alternative to \code{summary()} that can print out a pretty 
 }
 \examples{
 library(lavaan)
-# The famous Holzinger and Swineford (1939) example
+# the famous Holzinger and Swineford (1939) example
 HS.model <-  "visual  =~ x1 + x2 + x3
               textual =~ x4 + x5 + x6
               speed   =~ x7 + x8 + x9"
 fit <- cfa(HS.model, data = HolzingerSwineford1939)
 prettylavaan(fit, output_format = "datatable")
+
+# using robust estimators
+robustfit <- cfa(HS.model, data = HolzingerSwineford1939)
+prettylavaan(robustfit, output_format = "datatable")
+
+# request for robust fit indices
+prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
 }

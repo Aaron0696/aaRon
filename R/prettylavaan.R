@@ -5,21 +5,30 @@
 #'
 #' @param fitobj A lavaan fit object.
 #' @param output_format Output format, either "asis" for use with \code{results = "asis"} chunks. Or "datatable" for general html output.
+#' @param robust Defaults to \code{FALSE}, set to \code{TRUE} to print out scaled and robust fit indicators.
+#' @param modindice.nrow Defaults to 10. Number of rows to display for modification indices.
 #'
 #' @return
 #' @export
 #'
 #' @examples
 #' library(lavaan)
-#' # The famous Holzinger and Swineford (1939) example
+#' # the famous Holzinger and Swineford (1939) example
 #' HS.model <-  "visual  =~ x1 + x2 + x3
 #'               textual =~ x4 + x5 + x6
 #'               speed   =~ x7 + x8 + x9"
 #' fit <- cfa(HS.model, data = HolzingerSwineford1939)
 #' prettylavaan(fit, output_format = "datatable")
-prettylavaan <- function(fitobj, output_format = "asis")
+#'
+#' # using robust estimators
+#' robustfit <- cfa(HS.model, data = HolzingerSwineford1939)
+#' prettylavaan(robustfit, output_format = "datatable")
+#'
+#' # request for robust fit indices
+#' prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
+prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindice.nrow = 10)
 {
-  # extract parameter estimates
+  # 1. extract parameter estimates
   params <- lavaan::parameterEstimates(fitobj, standardized = TRUE)
   # formatting
   # change column names to sentence case
@@ -27,38 +36,116 @@ prettylavaan <- function(fitobj, output_format = "asis")
   # rearrange columns
   params <- params[,c("LHS","OP","RHS","STD.ALL","EST","SE","Z","PVALUE")]
 
-  # extract fit indices
+  # 2. extract fit indices
   fitind <- data.frame(Values = round(lavaan::fitMeasures(fitobj,
-                                                          fit.measures = c("chisq","df","pvalue","cfi",
-                                                                           "tli","rmsea","srmr","aic","bic")),2))
+                                                          fit.measures = c("npar",
+                                                                           "chisq",
+                                                                           "df",
+                                                                           "pvalue",
+                                                                           "cfi",
+                                                                           "tli",
+                                                                           "nnfi",
+                                                                           "nfi",
+                                                                           "rmsea",
+                                                                           "srmr",
+                                                                           "aic",
+                                                                           "bic"
+                                                          )),2))
+
+  if(robust)
+  {
+    # get scaled fit indices
+    fitind.scaled <- data.frame(Values = round(lavaan::fitMeasures(fitobj,
+                                                                   fit.measures = c("npar",
+                                                                                    "chisq.scaled",
+                                                                                    "df.scaled",
+                                                                                    "pvalue.scaled",
+                                                                                    "cfi.scaled",
+                                                                                    "tli.scaled",
+                                                                                    "nnfi.scaled",
+                                                                                    "nfi.scaled",
+                                                                                    "rmsea.scaled",
+                                                                                    "srmr_bentler"
+                                                                   )),2))
+    # get robust fit indices
+    fitind.robust <- data.frame(Values = round(lavaan::fitMeasures(fitobj,
+                                                                   fit.measures = c("npar",
+                                                                                    "cfi.robust",
+                                                                                    "tli.robust",
+                                                                                    "nnfi.robust",
+                                                                                    "nfi.robust",
+                                                                                    "rmsea.robust"
+                                                                   )),2))
+    # add rownames as extra column for merging
+    fitind$row <- row.names(fitind)
+    fitind.scaled$row <- gsub(".scaled|_bentler", "",row.names(fitind.scaled))
+    fitind.robust$row <- gsub(".robust", "",row.names(fitind.robust))
+    # add index variable to be used to resort the dataframe after merge()
+    # merge() sorts the dataframe even though sort = FALSE
+    fitind$index <- 1:nrow(fitind)
+    # merge into one dataframe to be displayed
+    temp <- merge(fitind, fitind.scaled,
+                  by = "row",
+                  all.x = TRUE, all.y = FALSE,
+                  sort = FALSE)
+    temp <- merge(temp, fitind.robust,
+                  by = "row",
+                  all.x = TRUE, all.y = FALSE,
+                  sort = FALSE)
+    # save the merged dataframe as fitind.all
+    # also remove the row column used for merging
+    fitind.all <- temp[,-grep("row", names(temp))]
+    row.names(fitind.all) <- temp$row
+    # sort fitind.all by index and remove index column
+    fitind.all <- fitind.all[order(fitind.all$index),-grep("index", names(fitind.all))]
+    names(fitind.all) <- c("Naive", "Scaled", "Robust")
+  } else {
+    fitind.all <- fitind
+  }
+
   # formatting
-  row.names(fitind) <- toupper(row.names(fitind))
+  row.names(fitind.all) <- toupper(row.names(fitind.all))
+
+  # 3. Modification Indices
+  modind <- modificationIndices(fitobj, maximum.number = modindice.nrow, sort. = TRUE)
+  # formatting
+  # change column names to sentence case
+  names(modind) <- toupper(names((modind)))
+
   if(output_format == "asis")
   {
+    cat("\n\n**Converged**:", fitobj@Fit@converged, "\n\n")
+    cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
+    cat("***\n\n")
     cat("**Fit Indices**:\n\n")
-    print(knitr::kable(fitind))
+    print(knitr::kable(fitind.all))
+    cat("***\n\n")
     cat("\n\n**Parameter Estimates**:\n\n")
     print(knitr::kable(params, digits = 2))
+    cat("\n\n**Modification Indices**:\n\n")
+    print(knitr::kable(modind, digits = 2))
   }
 
   if(output_format == "datatable")
   {
-    # create text output for fit indices
-    text <- paste0("Fit Indices:\nCHISQ = ",
-                   fitind$Values[1], ", df = ",
-                   fitind$Values[2],", p-value = ",
-                   fitind$Values[3], "\nCFI = ",
-                   fitind$Values[4], "\nTLI = ",
-                   fitind$Values[5], "\nRMSEA = ",
-                   fitind$Values[6], "\nSRMR = ",
-                   fitind$Values[7], "\nAIC = ",
-                   fitind$Values[8], "\nBIC = ",
-                   fitind$Values[9])
     # print
-    cat(text)
+    cat("Converged:", fitobj@Fit@converged)
+    cat("\n")
+    cat("Iterations:", fitobj@Fit@iterations)
+    cat("\n\n")
+    cat("Fit Indices:\n")
+    print(fitind.all)
+    cat("\n\n")
+    # change numeric values to 3 DP
+    modind[,-1:-3] <- data.frame(lapply(modind[,-1:-3], function(e){round(e,3)}))
+    # return the modind datatable
+    cat("Modification Indices:\n")
+    print(modind)
     # change numeric values to 3 DP
     params[,-1:-3] <- data.frame(lapply(params[,-1:-3], function(e){round(e,3)}))
-    # return the datatable
-    return(DT::datatable(params))
+    # return the params datatable
+    cat("\n\n")
+    cat("Parameter Estimaes:\n")
+    return(DT::datatable(params, filter = "top"))
   }
 }
