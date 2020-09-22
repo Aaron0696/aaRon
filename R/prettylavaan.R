@@ -145,7 +145,7 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
     params[,-1:-3] <- data.frame(lapply(params[,-1:-3], function(e){round(e,3)}))
     # return the params datatable
     cat("\n\n")
-    cat("Parameter Estimaes:\n")
+    cat("Parameter Estimates:\n")
     return(DT::datatable(params, filter = "top"))
   }
 }
