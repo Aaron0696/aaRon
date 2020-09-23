@@ -4,10 +4,14 @@
 \alias{prettyalpha}
 \title{Pretty Printing of psych::alpha() Results}
 \usage{
-prettyalpha(alphaobj, ...)
+prettyalpha(alphaobj, dp = 2, align = "c", ...)
 }
 \arguments{
 \item{alphaobj}{Summary object from executing psych::alpha().}
+
+\item{dp}{Defaults to 3. Number of decimal points for all numeric values.}
+
+\item{align}{Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}.}
 
 \item{...}{Additional arguments passed onto \code{kable()}.}
 }
