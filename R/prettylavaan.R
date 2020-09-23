@@ -118,6 +118,8 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
   if(output_format == "asis")
   {
     # print
+    cat("\n\n**Converged**:", fitobj@Fit@converged, "\n\n")
+    cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
     cat("***\n\n")
     cat("**Fit Indices**:\n\n")
     print(knitr::kable(fitind.all, digits = 2, align = "c", ...))
