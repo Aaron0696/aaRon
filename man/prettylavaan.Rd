@@ -9,6 +9,7 @@ prettylavaan(
   output_format = "asis",
   robust = FALSE,
   modindice.nrow = 10,
+  param.type = c("=~", "~~", "~"),
   ...
 )
 }
@@ -20,6 +21,8 @@ prettylavaan(
 \item{robust}{Defaults to \code{FALSE}, set to \code{TRUE} to print out scaled and robust fit indicators.}
 
 \item{modindice.nrow}{Defaults to 10. Number of rows to display for modification indices.}
+
+\item{param.type}{Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds.}
 
 \item{...}{Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.}
 }
