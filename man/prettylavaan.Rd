@@ -10,6 +10,8 @@ prettylavaan(
   robust = FALSE,
   modindice.nrow = 10,
   param.type = c("=~", "~~", "~"),
+  dp = 3,
+  align = "c",
   ...
 )
 }
@@ -23,6 +25,10 @@ prettylavaan(
 \item{modindice.nrow}{Defaults to 10. Number of rows to display for modification indices.}
 
 \item{param.type}{Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds.}
+
+\item{dp}{Defaults to 3. Number of decimal points for all numeric values.}
+
+\item{align}{Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}}
 
 \item{...}{Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.}
 }
