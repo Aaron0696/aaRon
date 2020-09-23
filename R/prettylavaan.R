@@ -9,7 +9,7 @@
 #' @param modindice.nrow Defaults to 10. Number of rows to display for modification indices.
 #' @param param.type Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds.
 #' @param dp Defaults to 3. Number of decimal points for all numeric values.
-#' @param align Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}
+#' @param align Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}.
 #' @param ... Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.
 #'
 #' @return
