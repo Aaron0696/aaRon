@@ -120,6 +120,8 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
     # print
     cat("\n\n**Converged**:", fitobj@Fit@converged, "\n\n")
     cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
+    cat("**Original Sample Size**:", as.numeric(fitobj@Data@norig), "\n\n")
+    cat("**Effective Sample Size**:", fitobj@SampleStats@ntotal, "\n\n")
     cat("***\n\n")
     cat("**Fit Indices**:\n\n")
     print(knitr::kable(fitind.all, digits = 2, align = "c", ...))
@@ -133,7 +135,10 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
   if(output_format == "datatable")
   {
     # print
-    print(fitobj)
+    cat("Converged:", fitobj@Fit@converged, "\n")
+    cat("Iterations:", fitobj@Fit@iterations, "\n")
+    cat("Original Sample Size:", as.numeric(fitobj@Data@norig), "\n")
+    cat("Effective Sample Size:", fitobj@SampleStats@ntotal)
     cat("\n\n")
     cat("Fit Indices:\n")
     print(fitind.all)
