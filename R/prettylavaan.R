@@ -8,6 +8,8 @@
 #' @param robust Defaults to \code{FALSE}, set to \code{TRUE} to print out scaled and robust fit indicators.
 #' @param modindice.nrow Defaults to 10. Number of rows to display for modification indices.
 #' @param param.type Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds.
+#' @param dp Defaults to 3. Number of decimal points for all numeric values.
+#' @param align Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}
 #' @param ... Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.
 #'
 #' @return
@@ -28,7 +30,14 @@
 #'
 #' # request for robust fit indices
 #' prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
-prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindice.nrow = 10, param.type = c("=~","~~","~"), ...)
+prettylavaan <- function(fitobj,
+                         output_format = "asis",
+                         robust = FALSE,
+                         modindice.nrow = 10,
+                         param.type = c("=~","~~","~"),
+                         dp = 3,
+                         align = "c",
+                         ...)
 {
   # 1. extract parameter estimates
   params <- lavaan::parameterEstimates(fitobj, standardized = TRUE)
@@ -54,7 +63,7 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
                                                                            "srmr",
                                                                            "aic",
                                                                            "bic"
-                                                          )),3))
+                                                          )),dp))
 
   if(robust)
   {
@@ -70,7 +79,7 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
                                                                                     "nfi.scaled",
                                                                                     "rmsea.scaled",
                                                                                     "srmr_bentler"
-                                                                   )),3))
+                                                                   )),dp))
     # get robust fit indices
     fitind.robust <- data.frame(Values = round(lavaan::fitMeasures(fitobj,
                                                                    fit.measures = c("npar",
@@ -79,7 +88,7 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
                                                                                     "nnfi.robust",
                                                                                     "nfi.robust",
                                                                                     "rmsea.robust"
-                                                                   )),3))
+                                                                   )),dp))
     # add rownames as extra column for merging
     fitind$row <- row.names(fitind)
     fitind.scaled$row <- gsub(".scaled|_bentler", "",row.names(fitind.scaled))
@@ -127,12 +136,12 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
     cat("**Effective Sample Size**:", fitobj@SampleStats@ntotal, "\n\n")
     cat("***\n\n")
     cat("**Fit Indices**:\n\n")
-    print(knitr::kable(fitind.all, digits = 2, align = "c", ...))
+    print(knitr::kable(fitind.all, digits = dp, align = align, ...))
     cat("***\n\n")
     cat("\n\n**Parameter Estimates**:\n\n")
-    print(knitr::kable(params, digits = 2, align = "c", ...))
+    print(knitr::kable(params, digits = dp, align = align, ...))
     cat("\n\n**Modification Indices**:\n\n")
-    print(knitr::kable(modind, digits = 2, align = "c", ...))
+    print(knitr::kable(modind, digits = dp, align = align, ...))
   }
 
   if(output_format == "datatable")
@@ -145,14 +154,14 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
     cat("\n\n")
     cat("Fit Indices:\n")
     print(fitind.all)
-    cat("\n\n")
+    cat("\n")
     # change numeric values to 3 DP
-    modind[,-1:-3] <- data.frame(lapply(modind[,-1:-3], function(e){round(e,3)}))
+    modind[,-1:-3] <- data.frame(lapply(modind[,-1:-3], function(e){round(e,dp)}))
     # return the modind datatable
     cat("Modification Indices:\n")
     print(modind)
     # change numeric values to 3 DP
-    params[,-1:-3] <- data.frame(lapply(params[,-1:-3], function(e){round(e,3)}))
+    params[,-1:-3] <- data.frame(lapply(params[,-1:-3], function(e){round(e,dp)}))
     # return the params datatable
     cat("\n\n")
     cat("Parameter Estimates:\n")
