@@ -8,7 +8,8 @@ prettylavaan(
   fitobj,
   output_format = "asis",
   robust = FALSE,
-  modindice.nrow = 10
+  modindice.nrow = 10,
+  ...
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ prettylavaan(
 \item{robust}{Defaults to \code{FALSE}, set to \code{TRUE} to print out scaled and robust fit indicators.}
 
 \item{modindice.nrow}{Defaults to 10. Number of rows to display for modification indices.}
+
+\item{...}{Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.}
 }
 \value{
 

@@ -7,6 +7,7 @@
 #' @param output_format Output format, either "asis" for use with \code{results = "asis"} chunks. Or "datatable" for general html output.
 #' @param robust Defaults to \code{FALSE}, set to \code{TRUE} to print out scaled and robust fit indicators.
 #' @param modindice.nrow Defaults to 10. Number of rows to display for modification indices.
+#' @param ... Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.
 #'
 #' @return
 #' @export
@@ -26,7 +27,7 @@
 #'
 #' # request for robust fit indices
 #' prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
-prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindice.nrow = 10)
+prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindice.nrow = 10, ...)
 {
   # 1. extract parameter estimates
   params <- lavaan::parameterEstimates(fitobj, standardized = TRUE)
@@ -118,12 +119,12 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
     cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
     cat("***\n\n")
     cat("**Fit Indices**:\n\n")
-    print(knitr::kable(fitind.all))
+    print(knitr::kable(fitind.all, digits = 2, ...))
     cat("***\n\n")
     cat("\n\n**Parameter Estimates**:\n\n")
-    print(knitr::kable(params, digits = 2))
+    print(knitr::kable(params, digits = 2, ...))
     cat("\n\n**Modification Indices**:\n\n")
-    print(knitr::kable(modind, digits = 2))
+    print(knitr::kable(modind, digits = 2, ...))
   }
 
   if(output_format == "datatable")
@@ -146,6 +147,6 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
     # return the params datatable
     cat("\n\n")
     cat("Parameter Estimates:\n")
-    return(DT::datatable(params, filter = "top"))
+    return(DT::datatable(params, filter = "top", ...))
   }
 }

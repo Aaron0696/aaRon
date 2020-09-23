@@ -4,12 +4,13 @@
 #' This function is an alternative to \code{alpha()} that can print out a pretty output within such a loop.
 #'
 #' @param alphaobj Summary object from executing psych::alpha().
+#' @param ... Additional arguments passed onto \code{kable()}.
 #'
 #' @return
 #' @export
 #'
 #' @examples To be added...
-prettyalpha <- function(alphaobj)
+prettyalpha <- function(alphaobj, ...)
 {
   # for each of these dataframes within alphaobj, total, alpha.drop and item.stats
   # use kable() to print out a nice table for each
@@ -17,16 +18,16 @@ prettyalpha <- function(alphaobj)
   cat("**Cronbach Alpha**:")
   cat("\n\n")
   names(alphaobj$total) <- toupper(names(alphaobj$total))
-  print(knitr::kable(alphaobj$total))
+  print(knitr::kable(alphaobj$total, ...))
   cat("\n\n")
   cat("**Alpha Values If Certain Items Were Dropped**:")
   cat("\n\n")
   names(alphaobj$alpha.drop) <- toupper(names(alphaobj$alpha.drop))
-  print(knitr::kable(alphaobj$alpha.drop, row.names = TRUE))
+  print(knitr::kable(alphaobj$alpha.drop, row.names = TRUE, ...))
   cat("\n\n")
   cat("**Item-Level Statistics**:")
   cat("\n\n")
   names(alphaobj$item.stats) <- toupper(names(alphaobj$item.stats))
-  print(knitr::kable(alphaobj$item.stats, row.names = TRUE))
+  print(knitr::kable(alphaobj$item.stats, row.names = TRUE, ...))
   cat("\n\n")
 }

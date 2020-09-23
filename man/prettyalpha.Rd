@@ -4,10 +4,12 @@
 \alias{prettyalpha}
 \title{Pretty Printing of psych::alpha() Results}
 \usage{
-prettyalpha(alphaobj)
+prettyalpha(alphaobj, ...)
 }
 \arguments{
 \item{alphaobj}{Summary object from executing psych::alpha().}
+
+\item{...}{Additional arguments passed onto \code{kable()}.}
 }
 \value{
 
