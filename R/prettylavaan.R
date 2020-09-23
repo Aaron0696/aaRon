@@ -51,7 +51,7 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
                                                                            "srmr",
                                                                            "aic",
                                                                            "bic"
-                                                          )),2))
+                                                          )),3))
 
   if(robust)
   {
@@ -67,7 +67,7 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
                                                                                     "nfi.scaled",
                                                                                     "rmsea.scaled",
                                                                                     "srmr_bentler"
-                                                                   )),2))
+                                                                   )),3))
     # get robust fit indices
     fitind.robust <- data.frame(Values = round(lavaan::fitMeasures(fitobj,
                                                                    fit.measures = c("npar",
@@ -76,7 +76,7 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
                                                                                     "nnfi.robust",
                                                                                     "nfi.robust",
                                                                                     "rmsea.robust"
-                                                                   )),2))
+                                                                   )),3))
     # add rownames as extra column for merging
     fitind$row <- row.names(fitind)
     fitind.scaled$row <- gsub(".scaled|_bentler", "",row.names(fitind.scaled))
@@ -100,6 +100,8 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
     # sort fitind.all by index and remove index column
     fitind.all <- fitind.all[order(fitind.all$index),-grep("index", names(fitind.all))]
     names(fitind.all) <- c("Naive", "Scaled", "Robust")
+    # change NA to blanks
+    fitind.all[is.na(fitind.all)] <- ""
   } else {
     fitind.all <- fitind
   }
@@ -115,24 +117,21 @@ prettylavaan <- function(fitobj, output_format = "asis", robust = FALSE, modindi
 
   if(output_format == "asis")
   {
-    cat("\n\n**Converged**:", fitobj@Fit@converged, "\n\n")
-    cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
+    # print
     cat("***\n\n")
     cat("**Fit Indices**:\n\n")
-    print(knitr::kable(fitind.all, digits = 2, ...))
+    print(knitr::kable(fitind.all, digits = 2, align = "c", ...))
     cat("***\n\n")
     cat("\n\n**Parameter Estimates**:\n\n")
-    print(knitr::kable(params, digits = 2, ...))
+    print(knitr::kable(params, digits = 2, align = "c", ...))
     cat("\n\n**Modification Indices**:\n\n")
-    print(knitr::kable(modind, digits = 2, ...))
+    print(knitr::kable(modind, digits = 2, align = "c", ...))
   }
 
   if(output_format == "datatable")
   {
     # print
-    cat("Converged:", fitobj@Fit@converged)
-    cat("\n")
-    cat("Iterations:", fitobj@Fit@iterations)
+    print(fitobj)
     cat("\n\n")
     cat("Fit Indices:\n")
     print(fitind.all)
