@@ -1,5 +1,5 @@
 ---
-title: "Template Title"
+title: "Basic Psychometric Analysis"
 author: "Your Name"
 date: "The Date"
 output:
@@ -12,26 +12,46 @@ output:
 
 # Setup
 
-Load data and packages first.
+Load data and packages.
 
 ```{r, warning = FALSE, message = FALSE, include = TRUE}
 
 ```
 
-# Scale Description
+# Scale Descriptions
 
-A table that displays the **variable names** and their **description** side-by-side.
+A table that displays the **variable names** and their **description/content** side-by-side. Helps readers to understand the content of the scale and sub-scales.
 
 ```{r}
-datatable(var_overview[grep("SWLS", temp$VarName),])
+# datatable()
+```
+
+# Univariate Statistics {.tabset}
+
+Item-level information to help identify problematic items.
+
+## Distribution
+
+Item-level response distribution, take note of skewed distributions.
+
+```{r}
+
+```
+
+## Summary Statistics
+
+Item-level descriptive statistics.
+
+```{r}
+# psych::describe()
 ```
 
 # Correlation Matrix
 
-Graphical display of the correlations within the scale. A good scale should show "triangular" patterns of positive correlations.
+A good scale should show "triangular"/"square" hotspots of positive correlations.
 
 ```{r}
-
+# corrplot::corrplot()
 ```
 
 # Cronbach Alphas
@@ -39,13 +59,22 @@ Graphical display of the correlations within the scale. A good scale should show
 Calculate Cronbach Alpha using `alpha()` from the `psych` package.
 
 ```{r}
-
+# psych::alpha() %>% aaRon::prettyalpha()
 ```
 
-# CFA
+# Confirmatory Factor Analysis
 
-Conduct a CFA to assess the factor structure and *Unidimensionality* using `cfa()` from the `lavaan` package.
+Conduct a CFA to assess the factor structure and *Unidimensionality* using `cfa()` from the `lavaan` package. Consider doing one CFA for each subscale and one for the full scale.
+
+```{r}
+# lavaan::cfa() %>% aaRon::prettylavaan()
+```
+
+# Correlations With Other Scales
+
+A preliminary look at the validity of the scale. Does it correlate with things that are theoretically related and not correlate with things that are theoretically distant?
 
 ```{r}
 
 ```
+
