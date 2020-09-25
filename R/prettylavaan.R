@@ -134,13 +134,14 @@ prettylavaan <- function(fitobj,
     cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
     cat("**Original Sample Size**:", as.numeric(fitobj@Data@norig), "\n\n")
     cat("**Effective Sample Size**:", fitobj@SampleStats@ntotal, "\n\n")
-    cat("***\n\n")
+
     cat("**Fit Indices**:\n\n")
     print(knitr::kable(fitind.all, digits = dp, align = align, ...))
     cat("***\n\n")
     cat("\n\n**Parameter Estimates**:\n\n")
     print(knitr::kable(params, digits = dp, align = align, ...))
-    cat("\n\n**Modification Indices**:\n\n")
+    cat("***\n\n")
+    cat("**Modification Indices**:\n\n")
     print(knitr::kable(modind, digits = dp, align = align, ...))
   }
 
