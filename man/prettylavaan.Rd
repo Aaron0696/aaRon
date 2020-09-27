@@ -61,5 +61,5 @@ prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
 # format = "html" is required to work with kableExtra
 library(kableExtra)
 mylist <- prettylavaan(robustfit, output_format = "kableExtra", format = "html", robust = TRUE)
-mylist$Params \%>\% kable_styling(font_size = 9)
+mylist$Param \%>\% kable_styling(font_size = 9)
 }
