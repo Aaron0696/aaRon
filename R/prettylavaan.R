@@ -25,7 +25,7 @@
 #' prettylavaan(fit, output_format = "datatable")
 #'
 #' # using robust estimators
-#' robustfit <- cfa(HS.model, data = HolzingerSwineford1939)
+#' robustfit <- cfa(HS.model, data = HolzingerSwineford1939, estimator = "MLM")
 #' prettylavaan(robustfit, output_format = "datatable")
 #'
 #' # request for robust fit indices
