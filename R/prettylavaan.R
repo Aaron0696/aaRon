@@ -4,10 +4,10 @@
 #' This function is an alternative to \code{summary()} that can print out a pretty output within such a loop.
 #'
 #' @param fitobj A lavaan fit object.
-#' @param output_format Output format, either "asis" for use with \code{results = "asis"} chunks. Or "datatable" for general html output.
+#' @param output_format Output format, default is "asis" for use with \code{results = "asis"} chunks. Use "datatable" for an interactive parameter table. Or "kableExtra" to generate a list of kable tables that can be independently piped to kableExtra functions.
 #' @param robust Defaults to \code{FALSE}, set to \code{TRUE} to print out scaled and robust fit indicators.
 #' @param modindice.nrow Defaults to 10. Number of rows to display for modification indices.
-#' @param param.type Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds.
+#' @param param.type Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds if WLS estimators were used.
 #' @param dp Defaults to 3. Number of decimal points for all numeric values.
 #' @param align Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}.
 #' @param ... Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.
@@ -30,6 +30,14 @@
 #'
 #' # request for robust fit indices
 #' prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
+#'
+#' # for piping to kableExtra for further editing
+#' # note: library(kableExtra) may mess up formatting of normal kable tables in the same Rmd document
+#' # refer to https://github.com/haozhu233/kableExtra/issues/265
+#' # format = "html" is required to work with kableExtra
+#' library(kableExtra)
+#' mylist <- prettylavaan(robustfit, output_format = "kableExtra", format = "html", robust = TRUE)
+#' mylist$Params %>% kable_styling(font_size = 9)
 prettylavaan <- function(fitobj,
                          output_format = "asis",
                          robust = FALSE,
@@ -143,6 +151,15 @@ prettylavaan <- function(fitobj,
     cat("***\n\n")
     cat("**Modification Indices**:\n\n")
     print(knitr::kable(modind, digits = dp, align = align, ...))
+  }
+
+  if(output_format == "kableExtra")
+  {
+    # return each kable table as an element in the list for piping to kableExtra
+    return(list(Fit = knitr::kable(fitind.all, digits = dp, align = align, ...),
+                Param = knitr::kable(params, digits = dp, align = align, ...),
+                ModInd = knitr::kable(modind, digits = dp, align = align, ...)))
+
   }
 
   if(output_format == "datatable")

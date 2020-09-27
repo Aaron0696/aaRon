@@ -18,13 +18,13 @@ prettylavaan(
 \arguments{
 \item{fitobj}{A lavaan fit object.}
 
-\item{output_format}{Output format, either "asis" for use with \code{results = "asis"} chunks. Or "datatable" for general html output.}
+\item{output_format}{Output format, default is "asis" for use with \code{results = "asis"} chunks. Use "datatable" for an interactive parameter table. Or "kableExtra" to generate a list of kable tables that can be independently piped to kableExtra functions.}
 
 \item{robust}{Defaults to \code{FALSE}, set to \code{TRUE} to print out scaled and robust fit indicators.}
 
 \item{modindice.nrow}{Defaults to 10. Number of rows to display for modification indices.}
 
-\item{param.type}{Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds.}
+\item{param.type}{Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds if WLS estimators were used.}
 
 \item{dp}{Defaults to 3. Number of decimal points for all numeric values.}
 
@@ -54,4 +54,12 @@ prettylavaan(robustfit, output_format = "datatable")
 
 # request for robust fit indices
 prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
+
+# for piping to kableExtra for further editing
+# note: library(kableExtra) may mess up formatting of normal kable tables in the same Rmd document
+# refer to https://github.com/haozhu233/kableExtra/issues/265
+# format = "html" is required to work with kableExtra
+library(kableExtra)
+mylist <- prettylavaan(robustfit, output_format = "kableExtra", format = "html", robust = TRUE)
+mylist$Params \%>\% kable_styling(font_size = 9)
 }
