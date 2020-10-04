@@ -16,6 +16,6 @@ fct2num(factor_vector)
 Convert Factor To Numeric While Printing Levels
 }
 \examples{
-a <- factor(c("Agree","Disagree","Agree"))
+a <- factor(c("Agree","Disagree","Agree","Agree","Disagree"))
 fct2num(a)
 }
