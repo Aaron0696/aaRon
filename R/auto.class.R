@@ -6,7 +6,7 @@
 #'   \item If the vector contains elements with non-numeric characters and have less than \code{X} unique values, classify as factor.
 #'   \item If the vector contains elements with non-numeric characters and have more than \code{X} unique values, classify as character.
 #'   \item If the vector contains elements with only numeric characters and have more than \code{X} unique values, classify as numeric.
-#'   \item If the vector contains elements with non-numeric characters and have less than \code{X} unique values, classify as factor.
+#'   \item If the vector contains elements with only numeric characters and have less than \code{X} unique values, classify as factor.
 #' }
 #'
 #' @param vector A vector to be classified.
@@ -30,11 +30,17 @@
 #'
 #' # use with lapply to apply across entire dataframe
 #' mydata <- data.frame(A = 1:100, B = c(1:99,"hello"))
-#' data.frame(lapply(mydata, FUN = auto.class))
+#' mydata <- data.frame(lapply(mydata, FUN = auto.class))
+#' str(mydata)
 auto.class <- function(vector, unique.thres.fac = 20)
 {
-  # if the vector contains non-numeric elements
-  if(sum(grepl("[^0-9.-]", vector)) != 0)
+  # count number of NAs if vector is coerced to numeric
+  NA.ifnumeric <- suppressWarnings(sum(is.na(as.numeric(vector))))
+  # original number of NAs
+  NA.original <- sum(is.na(vector))
+
+  # if coercing the vector to numeric produces NAs...
+  if(NA.ifnumeric > NA.original)
   {
     # ... and there are less than x unique values
     if(length(unique(vector)) < unique.thres.fac)
@@ -45,22 +51,15 @@ auto.class <- function(vector, unique.thres.fac = 20)
       # else, become a character
       return(as.character(vector))
     }
-  } else { # if the vector does not contain non-numeric in any element
-    # check if the vector contains date in YYYY-MM-DD
-    if(sum(grepl("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]", vector)) != 0)
+  } else { # if coercing the vector to numeric produces no NAs...
+    # ... and there are less than x unique values
+    if(length(unique(vector)) < unique.thres.fac)
     {
-      # if date is detected, convert to character
-      return(as.character(vector))
-    } else { # if the vector is does not contain non-numeric in any element and is not a date format
-      # ... and there are less than x unique values
-      if(length(unique(vector)) < unique.thres.fac)
-      {
-        # become a factor
-        return(factor(vector))
-      } else {
-        # else, become a numeric
-        return(as.numeric(vector))
-      }
+      # become a factor
+      return(factor(vector))
+    } else {
+      # else, become a numeric
+      return(as.numeric(vector))
     }
   }
 }

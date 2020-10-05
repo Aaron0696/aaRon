@@ -21,7 +21,7 @@ The classification of the class is based on the following chain of logic:
   \item If the vector contains elements with non-numeric characters and have less than \code{X} unique values, classify as factor.
   \item If the vector contains elements with non-numeric characters and have more than \code{X} unique values, classify as character.
   \item If the vector contains elements with only numeric characters and have more than \code{X} unique values, classify as numeric.
-  \item If the vector contains elements with non-numeric characters and have less than \code{X} unique values, classify as factor.
+  \item If the vector contains elements with only numeric characters and have less than \code{X} unique values, classify as factor.
 }
 }
 \examples{
@@ -39,5 +39,6 @@ auto.class(c("Strongly Agree","Agree","Disagree","Strongly Disagree"))
 
 # use with lapply to apply across entire dataframe
 mydata <- data.frame(A = 1:100, B = c(1:99,"hello"))
-data.frame(lapply(mydata, FUN = auto.class))
+mydata <- data.frame(lapply(mydata, FUN = auto.class))
+str(mydata)
 }
