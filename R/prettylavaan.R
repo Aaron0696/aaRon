@@ -59,6 +59,8 @@ prettylavaan <- function(fitobj,
   {
     # rearrange columns
     params <- params[,c("GROUP","LHS","OP","RHS","STD.ALL","EST","SE","Z","PVALUE")]
+    params$GROUP <- factor(params$GROUP)
+    levels(params$GROUP) <- fitobj@Data@group.label
   } else {
     # rearrange columns
     params <- params[,c("LHS","OP","RHS","STD.ALL","EST","SE","Z","PVALUE")]
