@@ -137,7 +137,8 @@ prettylavaan <- function(fitobj,
   }
 
   # formatting
-  row.names(fitind.all) <- toupper(row.names(fitind.all))
+  fitind.all <- data.frame(t(fitind.all))
+  names(fitind.all) <- toupper(names(fitind.all))
 
   # 3. Modification Indices
   modind <- modificationIndices(fitobj, maximum.number = modindice.nrow, sort. = TRUE)
