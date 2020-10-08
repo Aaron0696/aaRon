@@ -1,6 +1,6 @@
 #' Pretty Printing of Lavaan Results
 #'
-#' Results from \code{lavaan} get messed up when \code{summary()} is called within a for loop within an RMarkdown document with the chunk option \code{results = "asis"}.
+#' Results from \code{lavaan} get messed up when \code{summary()} is called within a \code{for} loop within an RMarkdown document with the chunk option \code{results = "asis"}.
 #' This function is an alternative to \code{summary()} that can print out a pretty output within such a loop.
 #'
 #' @param fitobj A lavaan fit object.
@@ -10,6 +10,7 @@
 #' @param param.type Defaults to only show path coefficients (~), factor loadings (=~) and covariances (~~). Use (|) for thresholds if WLS estimators were used.
 #' @param dp Defaults to 3. Number of decimal points for all numeric values.
 #' @param align Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}.
+#' @param multigroup Defaults to FALSE. Set to \code{TRUE} if a multiple-group analysis was conducted. Keeps the grouping column in \code{paramterEstimates()}.
 #' @param ... Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.
 #'
 #' @return
@@ -45,6 +46,7 @@ prettylavaan <- function(fitobj,
                          param.type = c("=~","~~","~"),
                          dp = 3,
                          align = "c",
+                         multigroup = FALSE,
                          ...)
 {
   # 1. extract parameter estimates
@@ -52,8 +54,16 @@ prettylavaan <- function(fitobj,
   # formatting
   # change column names to sentence case
   names(params) <- toupper(names(params))
-  # rearrange columns
-  params <- params[,c("LHS","OP","RHS","STD.ALL","EST","SE","Z","PVALUE")]
+  # if multigroup is TRUE, keep the group column
+  if(multigroup)
+  {
+    # rearrange columns
+    params <- params[,c("GROUP","LHS","OP","RHS","STD.ALL","EST","SE","Z","PVALUE")]
+  } else {
+    # rearrange columns
+    params <- params[,c("LHS","OP","RHS","STD.ALL","EST","SE","Z","PVALUE")]
+  }
+
   # filter only the relevant paramter estimates as determined by param.type
   params <- params[params$OP %in% param.type ,]
 
