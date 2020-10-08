@@ -20,10 +20,9 @@ fct2num <- function(factor_vector)
     } else {
       cat("More than 15 levels, printing suppressed.\n")
     }
-    # convert to numeric
-    return(as.numeric(factor_vector))
-  } else
-  {
-   stop("Input not a factor.")
+  } else {
+    warning("Input is not a factor.")
   }
+  # convert to numeric
+  return(as.numeric(factor_vector))
 }
