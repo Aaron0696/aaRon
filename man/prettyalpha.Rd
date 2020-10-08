@@ -19,7 +19,7 @@ prettyalpha(alphaobj, dp = 2, align = "c", ...)
 
 }
 \description{
-Results from \code{psych::alpha()} get messed up when \code{alpha()} is called within a for loop within an RMarkdown document with the chunk option \code{results = "asis"}.
+Results from \code{psych::alpha()} get messed up when \code{alpha()} is called within a \code{for} loop within an RMarkdown document with the chunk option \code{results = "asis"}.
 This function is an alternative to \code{alpha()} that can print out a pretty output within such a loop.
 }
 \examples{
