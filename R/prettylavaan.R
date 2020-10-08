@@ -155,10 +155,10 @@ prettylavaan <- function(fitobj,
 
     cat("**Fit Indices**:\n\n")
     print(knitr::kable(fitind.all, digits = dp, align = align, ...))
-    cat("***\n\n")
+    cat("\n\n")
     cat("\n\n**Parameter Estimates**:\n\n")
     print(knitr::kable(params, digits = dp, align = align, ...))
-    cat("***\n\n")
+    cat("\n\n")
     cat("**Modification Indices**:\n\n")
     print(knitr::kable(modind, digits = dp, align = align, ...))
   }
