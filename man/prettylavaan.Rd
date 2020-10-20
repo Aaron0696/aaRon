@@ -13,6 +13,7 @@ prettylavaan(
   dp = 3,
   align = "c",
   multigroup = FALSE,
+  show.modind = FALSE,
   ...
 )
 }
@@ -32,6 +33,8 @@ prettylavaan(
 \item{align}{Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}.}
 
 \item{multigroup}{Defaults to FALSE. Set to \code{TRUE} if a multiple-group analysis was conducted. Keeps the grouping column in \code{paramterEstimates()}.}
+
+\item{show.modind}{Defaults to FALSE. Set to \code{TRUE} to print modification indices.}
 
 \item{...}{Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.}
 }

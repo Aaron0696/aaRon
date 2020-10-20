@@ -11,6 +11,7 @@
 #' @param dp Defaults to 3. Number of decimal points for all numeric values.
 #' @param align Defaults to "c", which stands for centered. Adjusts the alignment of text within table cells. Works the same way as \code{kable()}.
 #' @param multigroup Defaults to FALSE. Set to \code{TRUE} if a multiple-group analysis was conducted. Keeps the grouping column in \code{paramterEstimates()}.
+#' @param show.modind Defaults to FALSE. Set to \code{TRUE} to print modification indices.
 #' @param ... Additional arguments passed onto \code{kable()} or \code{datatable} depending on \code{output_format}.
 #'
 #' @return
@@ -47,6 +48,7 @@ prettylavaan <- function(fitobj,
                          dp = 3,
                          align = "c",
                          multigroup = FALSE,
+                         show.modind = FALSE,
                          ...)
 {
   # 1. extract parameter estimates
@@ -162,8 +164,11 @@ prettylavaan <- function(fitobj,
     cat("\n\n**Parameter Estimates**:\n\n")
     print(knitr::kable(params, digits = dp, align = align, ...))
     cat("\n\n")
-    cat("**Modification Indices**:\n\n")
-    print(knitr::kable(modind, digits = dp, align = align, ...))
+    if(show.modind)
+    {
+      cat("**Modification Indices**:\n\n")
+      print(knitr::kable(modind, digits = dp, align = align, ...))
+    }
   }
 
   if(output_format == "kableExtra")
@@ -172,7 +177,16 @@ prettylavaan <- function(fitobj,
     return(list(Fit = knitr::kable(fitind.all, digits = dp, align = align, ...),
                 Param = knitr::kable(params, digits = dp, align = align, ...),
                 ModInd = knitr::kable(modind, digits = dp, align = align, ...)))
-
+    if(show.modind)
+    {
+      return(list(Fit = knitr::kable(fitind.all, digits = dp, align = align, ...),
+                  Param = knitr::kable(params, digits = dp, align = align, ...),
+                  ModInd = knitr::kable(modind, digits = dp, align = align, ...)))
+    } else
+    {
+      return(list(Fit = knitr::kable(fitind.all, digits = dp, align = align, ...),
+                  Param = knitr::kable(params, digits = dp, align = align, ...)))
+    }
   }
 
   if(output_format == "datatable")
@@ -188,9 +202,12 @@ prettylavaan <- function(fitobj,
     cat("\n")
     # change numeric values to 3 DP
     modind[,-1:-3] <- data.frame(lapply(modind[,-1:-3], function(e){round(e,dp)}))
-    # return the modind datatable
-    cat("Modification Indices:\n")
-    print(modind)
+    if(show.modind)
+    {
+      # return the modind datatable
+      cat("Modification Indices:\n")
+      print(modind)
+    }
     # change numeric values to 3 DP
     params[,-1:-3] <- data.frame(lapply(params[,-1:-3], function(e){round(e,dp)}))
     # return the params datatable
