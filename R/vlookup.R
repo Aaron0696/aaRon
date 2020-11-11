@@ -1,4 +1,4 @@
-#' Vlookup In R Using \code{merge()}
+#' VLookup In R Using \code{merge()}
 #'
 #' Implementing \code{vlookup} in R using \code{merge()}.
 #'

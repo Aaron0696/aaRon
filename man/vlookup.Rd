@@ -2,7 +2,7 @@
 % Please edit documentation in R/vlookup.R
 \name{vlookup}
 \alias{vlookup}
-\title{Vlookup In R Using \code{merge()}}
+\title{VLookup In R Using \code{merge()}}
 \usage{
 vlookup(data, lookup_table, data_col, lookup_col, lookup_value)
 }
