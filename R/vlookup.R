@@ -1,12 +1,12 @@
 #' VLookup In R Using \code{merge()}
 #'
-#' Implementing code\{vlookup} in R using \code{merge()}.
+#' Implementing \code{vlookup} in R using \code{merge()}.
 #'
-#' @param data WIP
-#' @param lookup_table WIP
-#' @param data_col WIP
-#' @param lookup_col WIP
-#' @param lookup_value WIP
+#' @param data Dataframe to \code{vlookup} from.
+#' @param lookup_table Table to lookup from, contains an identifier and a value column.
+#' @param data_col String. The column from data that contains the identifier.
+#' @param lookup_col String. The column from lookup_table that contains the identifier.
+#' @param lookup_value String. The column from lookup_table that contains the value.
 #'
 #' @return
 #' @export
