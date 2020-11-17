@@ -12,7 +12,7 @@
 #' mydata <- data.frame(a = c(1:8,NA,NA), b = 1:10, c = rep(NA,10))
 #' aggregate.scale(mydata)
 #' aggregate.scale(mydata, NA.threshold = 0.4)
-aggregate.scale <- function(dataframe,aggregate = "SUM",NA.threshold = 0.5,na.rm = TRUE)
+aggregateScale <- function(dataframe,aggregate = "SUM",NA.threshold = 0.5,na.rm = TRUE)
 {
   # calculate rowMeans or rowSums
   if(aggregate == "SUM")
