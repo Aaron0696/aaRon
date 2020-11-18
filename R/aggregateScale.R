@@ -1,4 +1,7 @@
-#' Calculate Row-wise Means and Sums for Scales
+#' aggregateScale()
+#'
+#' Calculates the mean or sum of each row of a dataframe using \code{rowMeans()}
+#' while applying a condition to only aggregate rows where missingess is below a certain threshold.
 #'
 #' @param dataframe A dataframe containing numeric scores to be aggregated. Each row should correspond to one observation. Each column is one variable.
 #' @param aggregate Defaults to \code{"SUM"}. Calculates sum scores, use \code{"MEAN"} for mean scores.

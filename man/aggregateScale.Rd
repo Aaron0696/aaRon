@@ -2,7 +2,7 @@
 % Please edit documentation in R/aggregateScale.R
 \name{aggregateScale}
 \alias{aggregateScale}
-\title{Calculate Row-wise Means and Sums for Scales}
+\title{aggregateScale()}
 \usage{
 aggregateScale(dataframe, aggregate = "SUM", NA.threshold = 0.5, na.rm = TRUE)
 }
@@ -19,7 +19,8 @@ aggregateScale(dataframe, aggregate = "SUM", NA.threshold = 0.5, na.rm = TRUE)
 
 }
 \description{
-Calculate Row-wise Means and Sums for Scales
+Calculates the mean or sum of each row of a dataframe using \code{rowMeans()}
+while applying a condition to only aggregate rows where missingess is below a certain threshold.
 }
 \examples{
 mydata <- data.frame(a = c(1:8,NA,NA), b = 1:10, c = rep(NA,10))
