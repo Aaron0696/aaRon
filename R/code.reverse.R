@@ -12,6 +12,12 @@
 #' mydata <- data.frame(myscale = c("Disagree", "Neutral", "Agree", "Neutral","Agree"))
 #' code.reverse(vector = mydata$myscale, original_levels = c("Disagree","Neutral","Agree"))
 code.reverse <- function(vector, original_levels){
+  # if there are values in the vector that is not in original_levels
+  if(any(!(unique(vector) %in% original_levels)))
+  {
+    stop("There are unique values in input that are not present in original_levels.")
+  }
+
   # convert vector input to a factor with the original levels
   vector <- factor(vector, levels = original_levels)
   # reverse code values in the vector by flipping the order of the vector
