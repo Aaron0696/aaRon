@@ -2,18 +2,21 @@
 % Please edit documentation in R/fct2num.R
 \name{fct2num}
 \alias{fct2num}
-\title{Convert Factor To Numeric While Printing Levels}
+\title{fct2num()}
 \usage{
-fct2num(factor_vector)
+fct2num(factor_vector, start = 1)
 }
 \arguments{
 \item{factor_vector}{A vector that is a factor.}
+
+\item{start}{Defaults to 1. The starting value of the resultant numeric vector. The value inputted for \code{start} will be the lowest numeric value for the lowest factor level.}
 }
 \value{
 
 }
 \description{
-Convert Factor To Numeric While Printing Levels
+Converts a factor to a numeric vector while adjusting for the starting value of the numeric vector.
+Useful for converting from categorical response (e.g. "Agree","Disagree") to numeric (1,2).
 }
 \examples{
 a <- factor(c("Agree","Disagree","Agree","Agree","Disagree"))
