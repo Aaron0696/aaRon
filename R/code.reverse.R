@@ -13,7 +13,7 @@
 #' code.reverse(vector = mydata$myscale, original_levels = c("Disagree","Neutral","Agree"))
 code.reverse <- function(vector, original_levels){
   # if there are values in the vector that is not in original_levels
-  if(any(!(unique(vector) %in% original_levels)))
+  if(any(!(na.omit(unique(vector)) %in% original_levels)))
   {
     stop("There are unique values in input that are not present in original_levels.")
   }
