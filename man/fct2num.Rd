@@ -16,7 +16,7 @@ fct2num(factor_vector, start = 1)
 }
 \description{
 Converts a factor to a numeric vector while adjusting for the starting value of the numeric vector.
-Useful for converting from categorical response (e.g. "Agree","Disagree") to numeric (1,2).
+Useful for converting from categorical responses (e.g. "Agree","Disagree") to numeric (1,2).
 }
 \examples{
 a <- factor(c("Agree","Disagree","Agree","Agree","Disagree"))

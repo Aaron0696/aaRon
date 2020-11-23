@@ -1,4 +1,4 @@
-name: Psychometric Diagnostics
+name: aaRon Theme
 description: >
-   A template for conducting basic psychometric diagnostics.
+   My .Rmd template with my own theme. Width is maximized and floating table of content is minimized.
 create_dir: FALSE
