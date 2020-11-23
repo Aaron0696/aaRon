@@ -1,0 +1,26 @@
+---
+title: "aaRon Template"
+author: "Your Name"
+date: "The Date"
+output:
+  html_document: 
+    toc: yes
+    toc_float: yes
+    highlight: haddock
+    code_folding: show
+---
+
+```{r}
+# keep this chunk to activate theme
+aaRon::use.style()
+```
+
+# Header 1
+
+```{r}
+print("Hello World!")
+```
+
+# Header 2
+
+# Header 3
