@@ -1,0 +1,99 @@
+﻿a {
+    font-weight: bold;
+}
+
+.warnings {
+    background: white;
+    padding: 10px;
+    width: 100px;
+    height: 40px;
+    color: darkred;
+    text-align: center;
+    font-size: 18px;
+    border-left-style: solid;
+    border-left-width: 10px;
+}
+
+pre code {
+    color: black;
+}
+
+pre:not([class]) {
+    background-color: #e7f1f5;
+}
+
+pre {
+    background-color: #d7e4e43d;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: black;
+}
+
+div.tocify {
+    width: 10% !important;
+    max-width: 260px;
+    max-height: 95%;
+    font-size: 12px;
+}
+
+@media (max-width: 991px) and (min-width: 768px)
+div.tocify {
+    width: 10%;
+}
+
+.tocify {
+    position: fixed;
+    border: 0px solid #333;
+    border-radius: 0px;
+}
+
+.toc-content {
+    padding-left: 60px;
+    padding-right: 10px;
+    float: right;
+}
+
+.tocify-subheader {
+    text-indent: 0px;
+    font-size: 11px;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: black;
+    border-color: black;
+}
+
+.col-sm-8 {
+    width: 90%;
+}
+
+.col-sm-4 {
+    width: 15%;
+    padding-left: 10px;
+}
+
+th, td {
+  font-size: 12px;
+}
+
+*::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+*::-webkit-scrollbar-track {
+  background: whitesmoke;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 20px;
+}
