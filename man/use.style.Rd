@@ -10,7 +10,7 @@ use.style()
 
 }
 \description{
-Function to apply cascading stylesheets from \code{aaRon} to any Rmarkdown document.
+Function to apply cascading stylesheets from \code{aaRon} to any Rmarkdown document. Also accessible through the templates provided in the package.
 }
 \examples{
 aaRon::use.style() # include into any R code chunk
