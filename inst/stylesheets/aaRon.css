@@ -1,4 +1,4 @@
-﻿a {
+a {
     font-weight: bold;
 }
 
@@ -44,11 +44,6 @@ div.tocify {
     font-size: 12px;
 }
 
-@media (max-width: 991px) and (min-width: 768px)
-div.tocify {
-    width: 10%;
-}
-
 .tocify {
     position: fixed;
     border: 0px solid #333;
@@ -84,6 +79,10 @@ div.tocify {
 
 th, td {
   font-size: 12px;
+}
+
+tbody tr:hover {
+  background: lightblue;
 }
 
 *::-webkit-scrollbar {
