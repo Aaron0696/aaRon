@@ -82,7 +82,7 @@ th, td {
 }
 
 tbody tr:hover {
-  background: lightblue;
+  background: #e7f1f5;
 }
 
 *::-webkit-scrollbar {
