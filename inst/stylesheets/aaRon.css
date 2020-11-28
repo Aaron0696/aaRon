@@ -4,11 +4,13 @@ a {
 
 .warnings {
     background: white;
+    margin-bottom: 20px;
+    width: auto;
     padding: 10px;
-    width: 100px;
+    width: auto;
     height: 40px;
     color: darkred;
-    text-align: center;
+    text-align: left;
     font-size: 18px;
     border-left-style: solid;
     border-left-width: 10px;
