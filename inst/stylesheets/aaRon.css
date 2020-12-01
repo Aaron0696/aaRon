@@ -46,12 +46,25 @@ body {
     color: black;
 }
 
-div.tocify {
-    width: 10% !important;
+@media only screen and (min-width: 768px)
+{
+  div.tocify {
+    width: 10%;
     max-width: 260px;
     max-height: 95%;
     font-size: 12px;
+  }
+
+  .col-sm-8 {
+    width: 85%;
+  }
+
+  .col-sm-4 {
+    width: 15%;
+    padding-left: 10px;
+  }
 }
+
 
 .tocify {
     position: fixed;
@@ -75,15 +88,6 @@ div.tocify {
     color: #fff;
     background-color: black;
     border-color: black;
-}
-
-.col-sm-8 {
-    width: 85%;
-}
-
-.col-sm-4 {
-    width: 15%;
-    padding-left: 10px;
 }
 
 th, td {
