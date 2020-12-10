@@ -20,9 +20,9 @@ fct2num <- function(factor_vector, start = 1)
     # print out levels before conversion
     if(length(levels(factor_vector)) < 20)
     {
-      cat("Levels:", levels(factor_vector), "\n")
+      message("Levels: ", paste0(levels(factor_vector), collapse = ", "), "\n")
     } else {
-      cat("More than 15 levels, printing suppressed.\n")
+      message("More than 15 levels, printing suppressed.\n")
     }
   } else {
     warning("Input is not a factor.")
@@ -33,3 +33,4 @@ fct2num <- function(factor_vector, start = 1)
   mynum <- mynum - (1 - start)
   return(mynum)
 }
+
