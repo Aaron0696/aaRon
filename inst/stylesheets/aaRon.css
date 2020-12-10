@@ -35,6 +35,10 @@ div.main-container {
     max-width: 1600px;
 }
 
+ol ol, ol ul, ul ol, ul ul {
+    margin-bottom: 10px;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
