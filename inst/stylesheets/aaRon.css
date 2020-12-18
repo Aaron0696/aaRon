@@ -2,6 +2,14 @@ a {
     font-weight: bold;
 }
 
+.pull-right {
+    float: left !important
+}
+
+.title, .author, .date {
+  text-align: center
+}
+
 .warnings {
     background: white;
     margin-bottom: 20px;
