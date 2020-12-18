@@ -3,6 +3,7 @@
 export(aggregateScale)
 export(auto.class)
 export(code.reverse)
+export(efa.diag)
 export(fct2num)
 export(prettyalpha)
 export(prettylavaan)
