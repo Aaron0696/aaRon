@@ -4,7 +4,10 @@
 \alias{use.style}
 \title{Applying \code{aaRon.css} to Rmarkdown Documents}
 \usage{
-use.style()
+use.style(mode = "work")
+}
+\arguments{
+\item{mode}{Defaults to "work", can take the option of "casual". Switches between CSS themes for work and casual use. The casual theme is slightly more flashy.}
 }
 \value{
 
@@ -14,4 +17,5 @@ Function to apply cascading stylesheets from \code{aaRon} to any Rmarkdown docum
 }
 \examples{
 aaRon::use.style() # include into any R code chunk
+aaRon::use.style(mode = "casual")
 }
