@@ -14,7 +14,7 @@
 use.style <- function(mode = "work")
 {
   # path to css file
-  if(mode == work)
+  if(mode == "work")
   {
     mypath <- system.file("stylesheets","aaRon.css", package = "aaRon")
   } else {
