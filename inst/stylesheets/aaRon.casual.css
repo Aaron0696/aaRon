@@ -124,6 +124,17 @@ tbody tr:hover {
   border-radius: 20px;
 }
 
+
+/* Overwritten CSS for casual style */
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: transparent;
+    border-color: transparent;
+    background-image: linear-gradient(120deg, #155799, #159957);
+}
+
 /* Additional CSS for casual style */
 
 div.fluid-row {
