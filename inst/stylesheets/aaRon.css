@@ -1,14 +1,23 @@
-﻿a {
+a {
     font-weight: bold;
+}
+
+.pull-right {
+    float: left !important
+}
+
+.title, .author, .date {
+  text-align: center
 }
 
 .warnings {
     background: white;
+    margin-bottom: 20px;
+    width: auto;
     padding: 10px;
-    width: 100px;
     height: 40px;
     color: darkred;
-    text-align: center;
+    text-align: left;
     font-size: 18px;
     border-left-style: solid;
     border-left-width: 10px;
@@ -26,6 +35,18 @@ pre {
     background-color: #d7e4e43d;
 }
 
+.halftable {
+    width: 50%;
+}
+
+div.main-container {
+    max-width: 1600px;
+}
+
+ol ol, ol ul, ul ol, ul ul {
+    margin-bottom: 10px;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -37,17 +58,25 @@ body {
     color: black;
 }
 
-div.tocify {
-    width: 10% !important;
+@media only screen and (min-width: 768px)
+{
+  div.tocify {
+    width: 10%;
     max-width: 260px;
     max-height: 95%;
     font-size: 12px;
+  }
+
+  .col-sm-8 {
+    width: 85%;
+  }
+
+  .col-sm-4 {
+    width: 15%;
+    padding-left: 10px;
+  }
 }
 
-@media (max-width: 991px) and (min-width: 768px)
-div.tocify {
-    width: 10%;
-}
 
 .tocify {
     position: fixed;
@@ -56,7 +85,7 @@ div.tocify {
 }
 
 .toc-content {
-    padding-left: 60px;
+    padding-left: 10px;
     padding-right: 10px;
     float: right;
 }
@@ -73,17 +102,12 @@ div.tocify {
     border-color: black;
 }
 
-.col-sm-8 {
-    width: 90%;
-}
-
-.col-sm-4 {
-    width: 15%;
-    padding-left: 10px;
-}
-
 th, td {
   font-size: 12px;
+}
+
+tbody tr:hover {
+  background: #e7f1f5;
 }
 
 *::-webkit-scrollbar {

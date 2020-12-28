@@ -34,6 +34,12 @@
 #' str(mydata)
 auto.class <- function(vector, unique.thres.fac = 20)
 {
+  # if input is a character, transform all "" to NAs
+  if(is.character(vector))
+  {
+    vector[vector == ""] <- NA
+  }
+
   # count number of NAs if vector is coerced to numeric
   NA.ifnumeric <- suppressWarnings(sum(is.na(as.numeric(vector))))
   # original number of NAs

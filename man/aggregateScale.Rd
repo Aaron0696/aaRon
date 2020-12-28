@@ -24,6 +24,6 @@ while applying a condition to only aggregate rows where missingess is below a ce
 }
 \examples{
 mydata <- data.frame(a = c(1:8,NA,NA), b = 1:10, c = rep(NA,10))
-aggregate.scale(mydata)
-aggregate.scale(mydata, NA.threshold = 0.4)
+aggregateScale(mydata)
+aggregateScale(mydata, NA.threshold = 0.2) # less than 0.2 missingness
 }
