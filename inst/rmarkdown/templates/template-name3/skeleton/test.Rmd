@@ -1,0 +1,127 @@
+---
+title: "aaRon Test Document"
+author: "Aaron0696"
+output:
+  html_document: 
+    toc: yes
+    toc_float: yes
+    highlight: haddock
+    code_folding: show
+---
+
+```{r}
+# keep this chunk to activate theme
+aaRon::use.style()
+```
+
+```{r, message = FALSE, warning = FALSE}
+library(aaRon)
+library(psych)
+library(lavaan)
+```
+
+# fct2num()
+
+```{r}
+a <- factor(c("Agree","Disagree","Agree","Agree","Disagree"))
+fct2num(a)
+fct2num(a, start = 0) # if likert scales begin at 0
+```
+
+# efa.diag()
+
+```{r}
+efa.diag(HolzingerSwineford1939[,7:15])
+```
+
+# tall.loadings()
+
+```{r}
+myefa <- fa(Harman74.cor$cov, 4, fm = "wls")
+tall.loadings(myefa$Structure)
+tall.loadings(myefa$loadings)
+```
+
+# aggregateScale()
+
+```{r}
+mydata <- data.frame(a = c(1:8,NA,NA), b = 1:10, c = rep(NA,10))
+mydata
+aggregateScale(mydata)
+aggregateScale(mydata, NA.threshold = 0.2) # less than 0.2 missingness
+```
+
+# vlookup()
+
+```{r}
+mydata <- data.frame(Type = rep(1:3,5), Rand = 4:6)
+mytable <- data.frame(Type = 1:3, Magnitude = c("Low","Medium","High"))
+vlookup(data = mydata,
+        lookup_table = mytable,
+        data_col = "Type",
+        lookup_col = "Type",
+        lookup_value = "Magnitude")
+```
+
+# auto.class()
+
+```{r}
+# return numeric
+auto.class(1:100)
+
+# return factor
+auto.class(rep(1:7,10))
+
+# return character
+auto.class(c(1:100,"hello"))
+
+# return factor
+auto.class(c("Strongly Agree","Agree","Disagree","Strongly Disagree"))
+
+# use with lapply to apply across entire dataframe
+mydata <- data.frame(A = 1:100, B = c(1:99,"hello"))
+mydata <- data.frame(lapply(mydata, FUN = auto.class))
+str(mydata)
+```
+
+# code.reverse()
+
+```{r}
+mydata <- data.frame(myscale = c("Disagree", "Neutral", "Agree", "Neutral","Agree"))
+code.reverse(vector = mydata$myscale, original_levels = c("Disagree","Neutral","Agree"))
+```
+
+# prettyalpha()
+
+```{r, results = "asis"}
+myalpha <- alpha(HolzingerSwineford1939[,7:15])
+prettyalpha(myalpha)
+```
+
+# prettylavaan()
+
+```{r}
+# the famous Holzinger and Swineford (1939) example
+HS.model <-  "visual  =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9"
+fit <- cfa(HS.model, data = HolzingerSwineford1939)
+prettylavaan(fit, output_format = "datatable")
+```
+
+```{r}
+# using robust estimators
+robustfit <- cfa(HS.model, data = HolzingerSwineford1939, estimator = "MLM")
+# request for robust fit indices
+prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
+```
+
+```{r}
+# for piping to kableExtra for further editing
+# note: library(kableExtra) may mess up formatting of normal kable tables in the same Rmd document
+# refer to https://github.com/haozhu233/kableExtra/issues/265
+# format = "html" is required to work with kableExtra
+library(kableExtra)
+mylist <- prettylavaan(robustfit, output_format = "kableExtra", format = "html", robust = TRUE)
+mylist$Param %>% kable_styling(font_size = 9)
+```
