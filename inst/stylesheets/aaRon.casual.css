@@ -1,0 +1,167 @@
+/* Common CSS for all aaRon */
+
+a {
+    font-weight: bold;
+}
+
+.pull-right {
+    float: left !important
+}
+
+.title, .author, .date {
+  text-align: center
+}
+
+.warnings {
+    background: white;
+    margin-bottom: 20px;
+    width: auto;
+    padding: 10px;
+    height: 40px;
+    color: darkred;
+    text-align: left;
+    font-size: 18px;
+    border-left-style: solid;
+    border-left-width: 10px;
+}
+
+pre code {
+    color: black;
+}
+
+pre:not([class]) {
+    background-color: #e7f1f5;
+}
+
+pre {
+    background-color: #d7e4e43d;
+}
+
+.halftable {
+    width: 50%;
+}
+
+div.main-container {
+    max-width: 1600px;
+}
+
+ol ol, ol ul, ul ol, ul ul {
+    margin-bottom: 10px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: black;
+}
+
+@media only screen and (min-width: 768px)
+{
+  div.tocify {
+    width: 10%;
+    max-width: 260px;
+    max-height: 95%;
+    font-size: 12px;
+  }
+
+  .col-sm-8 {
+    width: 85%;
+  }
+
+  .col-sm-4 {
+    width: 15%;
+    padding-left: 10px;
+  }
+}
+
+
+.tocify {
+    position: fixed;
+    border: 0px solid #333;
+    border-radius: 0px;
+}
+
+.toc-content {
+    padding-left: 10px;
+    padding-right: 10px;
+    float: right;
+}
+
+.tocify-subheader {
+    text-indent: 0px;
+    font-size: 11px;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: black;
+    border-color: black;
+}
+
+th, td {
+  font-size: 12px;
+}
+
+tbody tr:hover {
+  background: #e7f1f5;
+}
+
+*::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+*::-webkit-scrollbar-track {
+  background: whitesmoke;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 20px;
+}
+
+/* Additional CSS for casual style */
+
+div.fluid-row {
+    color: #fff;
+    text-align: center;
+    background-color: #159957;
+    background-image: linear-gradient(120deg, #155799, #159957);
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.title, .author, .date {
+    text-align: center;
+    color: white;
+}
+
+.btn {
+    padding: 0.6rem 0.9rem;
+    font-size: 1.1rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: rgba(255,255,255,1);
+    background-color: #159957;
+    background-image: linear-gradient(120deg, #155799, #159957);
+    border-color: #159957;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.3rem;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn:hover {
+    color: rgba(255,255,255,0.7);
+}
+.btn:visited {
+    color: rgba(255,255,255,0.7);
+}
+.btn:focus {
+    color: rgba(255,255,255,0.7);
+}
