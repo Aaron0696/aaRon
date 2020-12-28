@@ -4,12 +4,14 @@
 \alias{fct2num}
 \title{fct2num()}
 \usage{
-fct2num(factor_vector, start = 1)
+fct2num(factor_vector, start = 1, print = "message")
 }
 \arguments{
 \item{factor_vector}{A vector that is a factor.}
 
 \item{start}{Defaults to 1. The starting value of the resultant numeric vector. The value inputted for \code{start} will be the lowest numeric value for the lowest factor level.}
+
+\item{print}{Defaults to "message". Determines if the text messages of this function uses \code{cat()} or \code{message()}. This affects the behaviour in specific Rmarkdown chunks.}
 }
 \value{
 
@@ -21,4 +23,5 @@ Useful for converting from categorical responses (e.g. "Agree","Disagree") to nu
 \examples{
 a <- factor(c("Agree","Disagree","Agree","Agree","Disagree"))
 fct2num(a)
+fct2num(a, start = 0) # if likert scales begin at 0
 }
