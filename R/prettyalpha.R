@@ -11,7 +11,9 @@
 #' @return
 #' @export
 #'
-#' @examples To be added...
+#' @examples
+#' myalpha <- alpha(HolzingerSwineford1939[,7:15])
+#' prettyalpha(myalpha)
 prettyalpha <- function(alphaobj, dp = 2, align = "c", ...)
 {
   # for each of these dataframes within alphaobj, total, alpha.drop and item.stats

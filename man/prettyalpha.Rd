@@ -23,5 +23,6 @@ Results from \code{psych::alpha()} get messed up when \code{alpha()} is called w
 This function is an alternative to \code{alpha()} that can print out a pretty output within such a loop.
 }
 \examples{
-To be added...
+myalpha <- alpha(HolzingerSwineford1939[,7:15])
+prettyalpha(myalpha)
 }
