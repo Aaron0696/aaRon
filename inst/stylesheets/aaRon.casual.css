@@ -117,7 +117,7 @@ tbody tr:hover {
   height: 3px;
 }
 *::-webkit-scrollbar-track {
-  background: whitesmoke;
+  background: transparent;
 }
 *::-webkit-scrollbar-thumb {
   background-color: black;
