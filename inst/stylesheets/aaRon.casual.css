@@ -125,7 +125,7 @@ tbody tr:hover {
 }
 
 .sourceCode {
-    overflow: scroll;
+    overflow: inherit;
 }
 
 
