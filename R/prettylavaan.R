@@ -33,6 +33,10 @@
 #' # request for robust fit indices
 #' prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
 #'
+#' # multigroup
+#' mfit <- cfa(HS.model, data = HolzingerSwineford1939, estimator = "MLM", group = "sex")
+#' prettylavaan(mfit, robust = TRUE, multigroup = TRUE)
+#'
 #' # for piping to kableExtra for further editing
 #' # note: library(kableExtra) may mess up formatting of normal kable tables in the same Rmd document
 #' # refer to https://github.com/haozhu233/kableExtra/issues/265
@@ -52,7 +56,7 @@ prettylavaan <- function(fitobj,
                          ...)
 {
   # 1. extract parameter estimates
-  params <- lavaan::parameterEstimates(fitobj, standardized = TRUE)
+  params <- lavaan::parameterEstimates(fitobj, standardized = TRUE, output = "data.frame")
   # formatting
   # change column names to sentence case
   names(params) <- toupper(names(params))
@@ -68,7 +72,7 @@ prettylavaan <- function(fitobj,
     params <- params[,c("LHS","OP","RHS","STD.ALL","EST","SE","Z","PVALUE")]
   }
 
-  # filter only the relevant paramter estimates as determined by param.type
+  # filter only the relevant parameter estimates as determined by param.type
   params <- params[params$OP %in% param.type ,]
 
   # 2. extract fit indices
@@ -133,9 +137,7 @@ prettylavaan <- function(fitobj,
     row.names(fitind.all) <- temp$row
     # sort fitind.all by index and remove index column
     fitind.all <- fitind.all[order(fitind.all$index),-grep("index", names(fitind.all))]
-    names(fitind.all) <- c("Naive", "Scaled", "Robust")
-    # change NA to blanks
-    fitind.all[is.na(fitind.all)] <- ""
+    names(fitind.all) <- c("Naive", ".Scaled", ".Robust")
   } else {
     fitind.all <- fitind
   }
@@ -153,7 +155,8 @@ prettylavaan <- function(fitobj,
   if(output_format == "asis")
   {
     # print
-    cat("\n\n**Converged**:", fitobj@Fit@converged, "\n\n")
+    cat("\n\n**Estimator**:", fitobj@call[["estimator"]], "\n\n")
+    cat("**Converged**:", fitobj@Fit@converged, "\n\n")
     cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
     cat("**Original Sample Size**:", as.numeric(fitobj@Data@norig), "\n\n")
     cat("**Effective Sample Size**:", fitobj@SampleStats@ntotal, "\n\n")
@@ -192,6 +195,7 @@ prettylavaan <- function(fitobj,
   if(output_format == "datatable")
   {
     # print
+    cat("Estimator:", fitobj@call[["estimator"]], "\n")
     cat("Converged:", fitobj@Fit@converged, "\n")
     cat("Iterations:", fitobj@Fit@iterations, "\n")
     cat("Original Sample Size:", as.numeric(fitobj@Data@norig), "\n")
