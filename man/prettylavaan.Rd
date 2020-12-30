@@ -61,6 +61,10 @@ prettylavaan(robustfit, output_format = "datatable")
 # request for robust fit indices
 prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
 
+# multigroup
+mfit <- cfa(HS.model, data = HolzingerSwineford1939, estimator = "MLM", group = "sex")
+prettylavaan(mfit, robust = TRUE, multigroup = TRUE)
+
 # for piping to kableExtra for further editing
 # note: library(kableExtra) may mess up formatting of normal kable tables in the same Rmd document
 # refer to https://github.com/haozhu233/kableExtra/issues/265
