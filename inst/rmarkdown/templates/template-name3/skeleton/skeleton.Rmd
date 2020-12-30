@@ -1,24 +1,52 @@
 ---
-title: "aaRon Test Document"
+title: "aaRon Functions()"
 author: "Aaron0696"
 output:
   html_document: 
     toc: yes
     toc_float: yes
     highlight: haddock
-    code_folding: show
     keep_md: true
 ---
 
-```{r}
-# keep this chunk to activate theme
-aaRon::use.style()
-```
+<br>
+<a href="https://github.com/Aaron0696/psychmods" class = "btn">This Repository</a>
+<a href="https://aaron0696.github.io/" class = "btn">My Website</a>
+<a href="https://aaron0696.github.io/projects" class = "btn">My Projects</a>
+<a href="https://github.com/Aaron0696/" class = "btn">My Github</a>
+<a href="https://www.linkedin.com/in/aaron-lim-b30898135/" class = "btn">My LinkedIn</a>
 
 ```{r, message = FALSE, warning = FALSE}
 library(aaRon)
 library(psych)
 library(lavaan)
+```
+
+# aaRon
+
+`aaRon` is a package created to consolidate self-defined functions that I use in my daily work. The functions in this package are nothing ground-breaking, but they do make daily life a little easier. 
+
+As I am psychology-trained, most of these functions are related to common analysis/manipulation in psychology. E.g, `code.reverse()` made reverse-coding items easier, `aggregateScale()` is a single function that allowed us to calculate the sum/mean while ensuring that respondents with a certain percentage of missing items are coded as *NA*.
+
+Some of these functions are built on existing functions from other packages such as:
+
+* `lavaan`
+* `knitr`
+* `htmltools`
+* `tidyr`
+* `psych`
+
+This document is meant to be a showcase of these functions, coupled with short explanations on their usage. This will be updated when more functions are added.    
+
+# use.style()
+
+In .Rmd files, this function calls CSS from `aaRon` which styles the knitted html document. This document itself is styled this way.
+
+There are two options to choose from, **work** and **casual**. Main difference between the two are the colors, casual uses more flashy blue/green compared to work.
+
+```{r}
+aaRon::use.style(mode = "casual")
+# aaRon::use.style(mode = "work")
 ```
 
 # fct2num()
