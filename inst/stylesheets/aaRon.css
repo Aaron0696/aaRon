@@ -123,3 +123,7 @@ tbody tr:hover {
   background-color: black;
   border-radius: 20px;
 }
+
+.sourceCode {
+    overflow: scroll;
+}

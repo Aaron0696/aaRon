@@ -124,6 +124,10 @@ tbody tr:hover {
   border-radius: 20px;
 }
 
+.sourceCode {
+    overflow: scroll;
+}
+
 
 /* Overwritten CSS for casual style */
 
