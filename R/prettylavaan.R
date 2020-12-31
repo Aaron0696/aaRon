@@ -155,7 +155,7 @@ prettylavaan <- function(fitobj,
   if(output_format == "asis")
   {
     # print
-    cat("\n\n**Estimator**:", fitobj@call[["estimator"]], "\n\n")
+    cat("\n\n**Estimator**:", fit@loglik[["estimator"]], "\n\n")
     cat("**Converged**:", fitobj@Fit@converged, "\n\n")
     cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
     cat("**Original Sample Size**:", as.numeric(fitobj@Data@norig), "\n\n")
@@ -195,7 +195,7 @@ prettylavaan <- function(fitobj,
   if(output_format == "datatable")
   {
     # print
-    cat("Estimator:", fitobj@call[["estimator"]], "\n")
+    cat("Estimator:", fit@loglik[["estimator"]], "\n")
     cat("Converged:", fitobj@Fit@converged, "\n")
     cat("Iterations:", fitobj@Fit@iterations, "\n")
     cat("Original Sample Size:", as.numeric(fitobj@Data@norig), "\n")
