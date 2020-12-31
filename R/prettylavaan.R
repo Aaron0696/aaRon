@@ -153,10 +153,10 @@ prettylavaan <- function(fitobj,
   names(modind) <- toupper(names((modind)))
 
   # 4. Estimator
-  estimator <- fit@call[["estimator"]]
+  estimator <- fitobj@call[["estimator"]]
   if(is.null(estimator))
   {
-    estimator <- fit@loglik[["estimator"]]
+    estimator <- fitobj@loglik[["estimator"]]
   }
 
   if(output_format == "asis")
