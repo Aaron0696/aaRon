@@ -10,7 +10,7 @@ output:
 ---
 
 <br>
-<a href="https://github.com/Aaron0696/psychmods" class = "btn">This Repository</a>
+<a href="https://github.com/Aaron0696/aaRon" class = "btn">This Repository</a>
 <a href="https://aaron0696.github.io/" class = "btn">My Website</a>
 <a href="https://aaron0696.github.io/projects" class = "btn">My Projects</a>
 <a href="https://github.com/Aaron0696/" class = "btn">My Github</a>
@@ -24,9 +24,15 @@ library(lavaan)
 
 # aaRon
 
-`aaRon` is a package created to consolidate self-defined functions that I use in my daily work. The functions in this package are nothing ground-breaking, but they do make daily life a little easier. 
+`aaRon` is a package created to consolidate the self-defined functions that I use in my daily work. The functions in this package are nothing ground-breaking, but they do make daily life a little easier. 
 
-As I am psychology-trained, most of these functions are related to common analysis/manipulation in psychology. E.g, `code.reverse()` made reverse-coding items easier, `aggregateScale()` is a single function that allowed us to calculate the sum/mean while ensuring that respondents with a certain percentage of missing items are coded as *NA*.
+To install the package directly from R/RStudio:
+
+```{r, eval = FALSE}
+devtools::install_github("Aaron0696/aaRon")
+```
+
+As I am psychology-trained, most of these functions are related to common analysis/manipulation in psychology. E.g, `code.reverse()` made reverse-coding items easier, `aggregateScale()` is a single function to calculate the sum/mean while ensuring that respondents with a certain percentage of missing items are coded as *NA*.
 
 Some of these functions are built on existing functions from other packages such as:
 
@@ -36,13 +42,17 @@ Some of these functions are built on existing functions from other packages such
 * `tidyr`
 * `psych`
 
-This document is meant to be a showcase of these functions, coupled with short explanations on their usage. This will be updated when more functions are added.    
+This document is meant to be a showcase of these functions, coupled with short explanations on their usage. This will be updated when more functions are added. More details about the arguments of each function can be found in the help manual when the package is installed.
+
+```{r, eval = FALSE}
+?aggregateScale
+```
 
 # use.style()
 
-In .Rmd files, this function calls CSS from `aaRon` which styles the knitted html document. This document itself is styled this way.
+When knitting html files from R Markdown, this function calls a CSS from `aaRon` which styles the knitted html document. This document is styled this way.
 
-There are two options to choose from, **work** and **casual**. Main difference between the two are the colors, casual uses more flashy blue/green compared to work.
+There are two options to choose from, **work** and **casual**. Main difference between the two are the colors, **casual** uses more flashy blue/green compared to **work**.
 
 ```{r}
 aaRon::use.style(mode = "casual")
@@ -51,13 +61,32 @@ aaRon::use.style(mode = "casual")
 
 # fct2num()
 
+A function that transforms a factor vector to a numeric. The advantage over simply using `as.numeric()` is that:
+
+1. There is an additional argument `start` that can be used to determine the numeric value of the lowest level. In Psychology, we frequently have scales that start from zero, `as.numeric()` will always recode the lowest level as 1.
+
 ```{r}
 a <- factor(c("Agree","Disagree","Agree","Agree","Disagree"))
 fct2num(a)
 fct2num(a, start = 0) # if likert scales begin at 0
 ```
 
+2. It prints out the order of the factor levels. Sometimes we might make a mistake by using `as.numeric()` on a factor without checking the levels of the factor, so we might end up *mistakenly* coding **Neutral as 3, Disagree as 2 and Agree as 1**. Printing out the order of the factor alerts us to any such occurences.
+
+```{r}
+b <- factor(c("Neutral","Disagree","Agree","Agree","Disagree"))
+as.numeric(b) # as.numeric is silent, so this mistake might go undetected
+fct2num(b) # noisy, tells you that you are wrong
+```
+
 # efa.diag()
+
+This function bundles the calculation of KMO and Bartlett's Test of Spehericity into one. The code for the function was adapted from a research methods module conducted by [Professor Mike Cheung](https://scholar.google.com/citations?user=kuTjTlsAAAAJ&hl=en) from the National University of Singapore.
+
+The [Kaiser-Meyer-Olkin Measure of Sampling Adequacy](https://www.ibm.com/support/knowledgecenter/SSLVMB_26.0.0/statistics_casestudies_project_ddita/spss/tutorials/fac_telco_kmo_01.html) estimates the proportion of variance in the sample that can be estimated by underlying factors. Higher values (>0.5) indicate that the data is suitable for factor analysis.
+
+[Bartlett's Test of Sphericity](https://www.ibm.com/support/knowledgecenter/SSLVMB_26.0.0/statistics_casestudies_project_ddita/spss/tutorials/fac_telco_kmo_01.html) is a statistical test of the independence of the variables, the null hypothesis is that all variables are independent. Thus, *p* values below 0.05 rejects the null hypothesis, suggests that the variables are correlated and factor analysis is meaningful.
+
 
 ```{r}
 efa.diag(HolzingerSwineford1939[,7:15])
@@ -65,38 +94,69 @@ efa.diag(HolzingerSwineford1939[,7:15])
 
 # tall.loadings()
 
+Factor loadings from factor analysis functions such as `psych::fa()` produce factor loading matrices in wide-format.  
+Tall versions of factor loading complement the wide matrices and allow us to better inspect the items and factor loadings of each individual factor.  
+This is a function created to automate the conversion to tall format, eliminating factor loadings below a certain threshold and sorting the output by factors or items.
+
 ```{r}
 myefa <- fa(Harman74.cor$cov, 4, fm = "wls")
-tall.loadings(myefa$Structure)
-tall.loadings(myefa$loadings)
+tall.loadings(myefa$Structure) # structure matrix
+tall.loadings(myefa$loadings) # pattern matrix
+# define another threshold for factor loadings
+tall.loadings(myefa$loadings, cut = 0.3)
+# plug it into a datatable for easy sorting and filtering
+DT::datatable(tall.loadings(myefa$loadings),
+              filter = "top")
 ```
 
 # aggregateScale()
 
+Calculates the mean or sum of each row of a dataframe using `rowMeans()`, and only aggregating rows where rowwise-missingess is below a certain threshold.
+
+* In some scales, there are conditions that if a participant answers less than half the number items, his total score should be coded as missing. This can be achieved by setting `NA.threshold = 0.5`, only calculate sum scores for those with *less than* 0.5 missingness. 
+* This function bundles that feature along with `rowMeans()` or `rowSums()`.
+
 ```{r}
-mydata <- data.frame(a = c(1:8,NA,NA), b = 1:10, c = rep(NA,10))
+mydata <- data.frame(a = c(1:8,NA,NA), b = 1:10, c = c(1:2,rep(NA,8)))
 mydata
-aggregateScale(mydata)
-aggregateScale(mydata, NA.threshold = 0.2) # less than 0.2 missingness
+aggregateScale(mydata, aggregate = "MEAN", NA.threshold = 0.5)
+# only calculate for less than 0.2 missingness
+aggregateScale(mydata, aggregate = "SUM", NA.threshold = 0.2)
 ```
 
 # vlookup()
 
+We are familiar with the vlookup function from Excel but doing it in R is a little less straightforward. I use `merge()` to replicate the behavior of vlookup. 
+
+However, the arguments to `merge()` do not match well to the existing vlookup arguments that we know from Excel, so this function packages `merge()` into a function that resembles vlookup. 
+
 ```{r}
 mydata <- data.frame(Type = rep(1:3,5), Rand = 4:6)
-mytable <- data.frame(Type = 1:3, Magnitude = c("Low","Medium","High"))
-vlookup(data = mydata,
-        lookup_table = mytable,
-        data_col = "Type",
-        lookup_col = "Type",
-        lookup_value = "Magnitude")
+mydata
+mytable <- data.frame(Type2 = 1:3, Magnitude = c("Low","Medium","High"))
+vlookup(data = mydata, # the dataframe that will have the column appended
+        lookup_table = mytable, # the table that contains the information to be added
+        data_col = "Type", # which column in "data" should we match on
+        lookup_col = "Type2", # which column in "lookup_table" should we match on
+        lookup_value = "Magnitude") # which column in "lookup_table" should we extract the values from
 ```
 
 # auto.class()
 
+Sometimes we just want to quickly look through a dataset, but our data may have some variables which are wrongly classed, e.g. Age as a factor. This is a function that can be used to quickly loop through an entire dataset and change the class of each variable accordingly.
+
+Takes in a vector as input, coerces the vector into a specific class using `as.numeric()`, `factor()` or `as.character()`. Coerced vector is returned as output. Output is determined based on the following conditions.
+
+* If the vector contains elements which are *non-numeric* and have less than `X` unique values, classify as factor.
+* If the vector contains elements which are *non-numeric* and have more than `X` unique values, classify as character.
+* If the vector contains elements which are *all numeric* and have more than `X` unique values, classify as numeric.
+* If the vector contains elements which are *all numeric* and have less than `X` unique values, classify as factor.
+
+`X` can be manuaaly defined by the user through the `unique.thres.fac` argument, defaults to 20.
+
 ```{r}
 # return numeric
-auto.class(1:100)
+auto.class(as.character(1:100))
 
 # return factor
 auto.class(rep(1:7,10))
@@ -115,42 +175,47 @@ str(mydata)
 
 # code.reverse()
 
+Implements reverse-coding of items using `factor()`. One advantage over `psych::reverse.code()` is that input need not be numeric.
+
 ```{r}
 mydata <- data.frame(myscale = c("Disagree", "Neutral", "Agree", "Neutral","Agree"))
-code.reverse(vector = mydata$myscale, original_levels = c("Disagree","Neutral","Agree"))
+mydata$myscale
+code.reverse(vector = mydata$myscale, 
+             original_levels = c("Disagree","Neutral","Agree"))
 ```
 
 # prettyalpha()
 
+I found myself frequently using `for` loops and `results = "asis"` to automate the creation of various data reports. But results from `psych::alpha()` get messed up when `alpha()` is called within an R Markdown chunk with the option `results = "asis"`. This function takes the output of `alpha()`, formats it, and feeds it to `kable()` to print out prettier tables.
+
 ```{r, results = "asis"}
 myalpha <- alpha(HolzingerSwineford1939[,7:15])
+# set chunk option to results = "asis"
 prettyalpha(myalpha)
 ```
 
 # prettylavaan()
 
-```{r}
+Similar to `alpha()` above, results from `lavaan` get messed up when `summary(fit)` is called within a `for` loop within an R Markdown chunk with the option `results = "asis"`. This function is an alternative to `summary()` that can print out a pretty output when `results = "asis"`.
+
+```{r, results = "asis"}
 # the famous Holzinger and Swineford (1939) example
 HS.model <-  "visual  =~ x1 + x2 + x3
               textual =~ x4 + x5 + x6
               speed   =~ x7 + x8 + x9"
 fit <- cfa(HS.model, data = HolzingerSwineford1939)
-prettylavaan(fit, output_format = "datatable")
+prettylavaan(fit, output_format = "asis")
 ```
 
-```{r}
+```{r, results = "asis"}
 # using robust estimators
 robustfit <- cfa(HS.model, data = HolzingerSwineford1939, estimator = "MLM")
 # request for robust fit indices
-prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
+prettylavaan(robustfit, output_format = "asis", robust = TRUE)
 ```
 
+There is also an option to output a `datatable` for the parameters by specifying `output_format = "datatable"`
+
 ```{r}
-# for piping to kableExtra for further editing
-# note: library(kableExtra) may mess up formatting of normal kable tables in the same Rmd document
-# refer to https://github.com/haozhu233/kableExtra/issues/265
-# format = "html" is required to work with kableExtra
-library(kableExtra)
-mylist <- prettylavaan(robustfit, output_format = "kableExtra", format = "html", robust = TRUE)
-mylist$Param %>% kable_styling(font_size = 9)
+prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
 ```
