@@ -15,7 +15,7 @@ code.reverse(vector, original_levels)
 Returns a factor vector of the same length as vector with reverse-coded responses, with levels corresponding to original_level
 }
 \description{
-Implements reverse-coding of items using \code{factor()}. One advantage over \code{psych::reverse.code} is that input need not be numeric.
+Implements reverse-coding of items using \code{factor()}. One advantage over \code{psych::reverse.code()} is that input need not be numeric.
 }
 \examples{
 mydata <- data.frame(myscale = c("Disagree", "Neutral", "Agree", "Neutral","Agree"))

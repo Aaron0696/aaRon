@@ -1,6 +1,6 @@
 #' Reverse Coding of Scales
 #'
-#'Implements reverse-coding of items using \code{factor()}. One advantage over \code{psych::reverse.code} is that input need not be numeric.
+#' Implements reverse-coding of items using \code{factor()}. One advantage over \code{psych::reverse.code()} is that input need not be numeric.
 #'
 #' @param vector A numeric, character or factor vector.
 #' @param original_levels A character vector denoting the order of the original scale (lowest level on the left)

@@ -1,7 +1,7 @@
 #' Pretty Printing of Lavaan Results
 #'
-#' Results from \code{lavaan} get messed up when \code{summary()} is called within a \code{for} loop within an RMarkdown document with the chunk option \code{results = "asis"}.
-#' This function is an alternative to \code{summary()} that can print out a pretty output within such a loop.
+#' Results from \code{lavaan} get messed up when \code{summary()} is called within a \code{for} loop within an R Markdown chunk with the option \code{results = "asis"}.
+#' This function is an alternative to \code{summary()} that can print out a pretty output in such situations.
 #'
 #' @param fitobj A lavaan fit object.
 #' @param output_format Output format, default is "asis" for use with \code{results = "asis"} chunks. Use "datatable" for an interactive parameter table. Or "kableExtra" to generate a list of kable tables that can be independently piped to kableExtra functions.
