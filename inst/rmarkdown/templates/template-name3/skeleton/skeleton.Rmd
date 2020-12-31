@@ -71,7 +71,7 @@ fct2num(a)
 fct2num(a, start = 0) # if likert scales begin at 0
 ```
 
-2. It prints out the order of the factor levels. Sometimes we might make a mistake by using `as.numeric()` on a factor without checking the levels of the factor, so we might end up *mistakenly* coding **Neutral as 3, Disagree as 2 and Agree as 1**. Printing out the order of the factor alerts us to any such occurences.
+2. It prints out the order of the factor levels. Sometimes we might make a mistake by using `as.numeric()` on a factor without checking the levels of the factor, so we might end up *mistakenly* coding **Neutral as 3, Disagree as 2 and Agree as 1**. Printing out the order of the factor alerts us to any such occurrences.
 
 ```{r}
 b <- factor(c("Neutral","Disagree","Agree","Agree","Disagree"))
@@ -113,14 +113,14 @@ DT::datatable(tall.loadings(myefa$loadings),
 
 Calculates the mean or sum of each row of a dataframe using `rowMeans()`, and only aggregating rows where rowwise-missingess is below a certain threshold.
 
-* In some scales, there are conditions that if a participant answers less than half the number items, his total score should be coded as missing. This can be achieved by setting `NA.threshold = 0.5`, only calculate sum scores for those with *less than* 0.5 missingness. 
+* In some scales, there are conditions that if a participant answers less than half the number items, his total score should be coded as missing. This can be achieved by setting `NA.threshold = 0.5`, only calculate sum scores for those with *less than* 0.5 missingness. **0.5 is the default.**
 * This function bundles that feature along with `rowMeans()` or `rowSums()`.
 
 ```{r}
 mydata <- data.frame(a = c(1:8,NA,NA), b = 1:10, c = c(1:2,rep(NA,8)))
 mydata
 aggregateScale(mydata, aggregate = "MEAN", NA.threshold = 0.5)
-# only calculate for less than 0.2 missingness
+# only calculate sum score for rows with less than 0.2 missingness
 aggregateScale(mydata, aggregate = "SUM", NA.threshold = 0.2)
 ```
 
@@ -152,7 +152,7 @@ Takes in a vector as input, coerces the vector into a specific class using `as.n
 * If the vector contains elements which are *all numeric* and have more than `X` unique values, classify as numeric.
 * If the vector contains elements which are *all numeric* and have less than `X` unique values, classify as factor.
 
-`X` can be manuaaly defined by the user through the `unique.thres.fac` argument, defaults to 20.
+`X` can be manually defined by the user through the `unique.thres.fac` argument, defaults to 20.
 
 ```{r}
 # return numeric
