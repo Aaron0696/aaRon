@@ -152,10 +152,17 @@ prettylavaan <- function(fitobj,
   # change column names to sentence case
   names(modind) <- toupper(names((modind)))
 
+  # 4. Estimator
+  estimator <- fit@call[["estimator"]]
+  if(is.null(estimator))
+  {
+    estimator <- fit@loglik[["estimator"]]
+  }
+
   if(output_format == "asis")
   {
     # print
-    cat("\n\n**Estimator**:", fit@loglik[["estimator"]], "\n\n")
+    cat("\n\n**Estimator**:", estimator, "\n\n")
     cat("**Converged**:", fitobj@Fit@converged, "\n\n")
     cat("**Iterations**:", fitobj@Fit@iterations, "\n\n")
     cat("**Original Sample Size**:", as.numeric(fitobj@Data@norig), "\n\n")
@@ -195,7 +202,7 @@ prettylavaan <- function(fitobj,
   if(output_format == "datatable")
   {
     # print
-    cat("Estimator:", fit@loglik[["estimator"]], "\n")
+    cat("Estimator:", estimator, "\n")
     cat("Converged:", fitobj@Fit@converged, "\n")
     cat("Iterations:", fitobj@Fit@iterations, "\n")
     cat("Original Sample Size:", as.numeric(fitobj@Data@norig), "\n")
