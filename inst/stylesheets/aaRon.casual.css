@@ -41,6 +41,14 @@ pre {
     width: 50%;
 }
 
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    margin-bottom: 2px;
+}
+
+.datatables {
+    overflow: scroll;
+}
+
 div.main-container {
     max-width: 1600px;
 }
@@ -78,7 +86,6 @@ body {
     padding-left: 10px;
   }
 }
-
 
 .tocify {
     position: fixed;
