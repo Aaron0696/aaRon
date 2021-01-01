@@ -13,21 +13,6 @@ output:
 
 <!-- Remove "includes: in_header: ../GA_Script.html" before knitting this document! -->
 
-<style>
-
-.dataTables_wrapper .dataTables_paginate .paginate_button 
-{
-  margin-bottom: 2px;
-}
-
-.datatables
-{
-  overflow: scroll;
-}
-
-</style>
-
-
 <br>
 <a href="https://github.com/Aaron0696/aaRon" class = "btn">This Repository</a>
 <a href="https://aaron0696.github.io/" class = "btn">My Website</a>
