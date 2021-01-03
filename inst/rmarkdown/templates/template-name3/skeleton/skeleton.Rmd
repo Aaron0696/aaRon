@@ -6,7 +6,6 @@ output:
     toc: yes
     toc_float: yes
     highlight: haddock
-    keep_md: true
     includes:
        in_header: ../GA_Script.html
 ---
@@ -183,7 +182,7 @@ str(mydata)
 
 # code.reverse()
 
-Implements reverse-coding of items using `factor()`. One advantage over `psych::reverse.code()` is that input need not be numeric.
+Reverse-coding of items using `factor()`. One advantage over `psych::reverse.code()` is that input can be non-numeric.
 
 ```{r}
 mydata <- data.frame(myscale = c("Disagree", "Neutral", "Agree", "Neutral","Agree"))
