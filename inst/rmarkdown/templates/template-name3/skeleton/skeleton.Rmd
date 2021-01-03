@@ -135,9 +135,13 @@ We are familiar with the vlookup function from Excel but doing it in R is a litt
 However, the arguments to `merge()` do not match well to the existing vlookup arguments that we know from Excel, so this function packages `merge()` into a function that resembles vlookup. 
 
 ```{r}
-mydata <- data.frame(Type = rep(1:3,5), Rand = 4:6)
+mydata <- data.frame(Type = rep(1:3,5))
 mydata
 mytable <- data.frame(Type2 = 1:3, Magnitude = c("Low","Medium","High"))
+mytable
+# create a new column in mydata that indicates whether
+# the magnitude was low, medium or high 
+# according to the type as indicated in mytable
 vlookup(data = mydata, # the dataframe that will have the column appended
         lookup_table = mytable, # the table that contains the information to be added
         data_col = "Type", # which column in "data" should we match on
