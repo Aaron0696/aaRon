@@ -27,6 +27,7 @@ a {
 
 pre code {
     color: black;
+    font-size: 14px;
 }
 
 pre:not([class]) {
