@@ -233,7 +233,8 @@ Automatically append relative proportions/percentages to raw counts calculated f
 
 ```{r}
 mydata <- data.frame(x1 = rep(c("Male","Female","Male"), 100),
-                     x2 = rep(c("High","Medium","Low"),100))
+                     x2 = factor(rep(c("High","Medium","Low","Medium"),75),
+                                 levels = c("Low","Medium","High")))
 # two way frequency table
 a <- table(mydata$x1,mydata$x2)
 prettytable(a)
