@@ -22,6 +22,8 @@ mydata <- data.frame(x1 = rep(c("Male","Female","Male"), 100), x2 = rep(c("High"
 # two way frequency table
 a <- table(mydata$x1,mydata$x2)
 prettytable(a)
+# feed it into kable for a prettier table
+knitr::kable(prettytable(a), align = "c")
 # one way frequency table
 a <- table(mydata$x1)
 prettytable(a)
