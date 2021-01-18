@@ -226,3 +226,20 @@ There is also an option to output a `datatable` for the parameters by specifying
 ```{r}
 prettylavaan(robustfit, output_format = "datatable", robust = TRUE)
 ```
+
+# prettytable()
+
+Automatically append relative proportions/percentages to raw counts calculated from `table()`. Currently only works for 1 and 2 way frequency tables.
+
+```{r}
+mydata <- data.frame(x1 = rep(c("Male","Female","Male"), 100),
+                     x2 = rep(c("High","Medium","Low"),100))
+# two way frequency table
+a <- table(mydata$x1,mydata$x2)
+prettytable(a)
+# feed it into kable for a prettier table
+knitr::kable(prettytable(a), align = "c")
+# one way frequency table
+a <- table(mydata$x1)
+prettytable(a)
+```
