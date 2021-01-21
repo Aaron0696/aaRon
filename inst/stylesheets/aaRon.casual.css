@@ -38,6 +38,11 @@ pre {
     background-color: #d7e4e43d;
 }
 
+.table {
+    overflow-x: scroll;
+    display: block;
+}
+
 .halftable {
     width: 50%;
 }
