@@ -25,6 +25,19 @@ a {
     border-left-width: 10px;
 }
 
+.myhead {
+    background: white;
+    margin-bottom: 20px;
+    width: auto;
+    padding: 10px;
+    height: 40px;
+    color: steelblue;
+    text-align: left;
+    font-size: 18px;
+    border-left-style: solid;
+    border-left-width: 10px;
+}
+
 pre code {
     color: black;
     font-size: 14px;
